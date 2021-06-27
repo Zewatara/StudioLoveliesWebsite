@@ -54,6 +54,12 @@ app.get("/contact", (req, res) => {
 
 app.post("/contact", (req, res) => {
     if (req.query.sendEmail == "" || req.query.sendEmail == true) {
+
+        return res.send({
+            status: "error",
+            error: "E-mail is currently not set-up"
+        });
+
         const mail = {
             from: req.body.email,
             to: "isaac.l@videotron.ca",
