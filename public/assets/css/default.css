@@ -124,6 +124,7 @@ a {
 }
 
 .card h1 {
+    padding-top: 15px;
     font-size: 25pt;
     font-weight: 700;
 }
