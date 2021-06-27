@@ -1,0 +1,182 @@
+@font-face {
+    font-family: AvantGardeLT-Medium;
+    src: url("../fonts/AvantGardeLT-Medium.otf");
+}
+
+body {
+    font-family: AvantGardeLT-Medium;
+    font-size: 15pt;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header {
+    background-color: rgb(0,173,239);
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+}
+
+.logo {
+    height: 100%;
+    width: 23%;
+    cursor: pointer;
+    transition: ease .2s;
+}
+
+.logo:hover {
+    transform: scale(1.02);
+}
+
+.logo #studioLovelies-logo {
+    float: left;
+    margin: 5px 0 0 10px;
+}
+
+.logo #studioLovelies-text {
+    margin-left: 5px;
+    display: inline-block;
+    position: absolute;
+}
+
+.navbar {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 0;
+}
+
+.navlist {
+    list-style-type: none;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.navlist li {
+    float: left;
+    height: 100%;
+    border: 1px solid rgba(0,160,220, 0.8);
+    transition: 0.5s ease;
+}
+
+.navlist li.current {
+    background-color: rgba(0,160,220, 0.8);
+}
+
+.navlist li:hover {
+    background-color: rgba(0,160,220, 0.8);
+}
+
+.navlist li a {
+    color: white;
+    font-weight: 500;
+    width: 100px;
+    height: calc(100% - 10px);
+    display: block;
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.navlist li a span {
+    display: inline-block;
+    margin-top: 30%;
+}
+
+.container {
+    padding: 25px;
+    max-width: 75%;
+}
+
+.card {
+    background-color: rgb(0,173,239);
+    box-shadow: 5px 5px 10px rgba(150, 150, 150, 0.2);
+    color: white;
+    overflow: auto;
+}
+
+.card::-webkit-scrollbar {
+    width: 20px;
+}
+
+.card::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+.card::-webkit-scrollbar-thumb {
+    background: rgb(0, 160, 220);
+  }
+
+.card::-webkit-scrollbar-thumb:hover {
+    background: rgb(0, 150, 210);
+}
+
+.card h1 {
+    font-size: 25pt;
+    font-weight: 700;
+}
+
+.card h2 {
+    font-size: 20pt;
+    font-weight: 600;
+}
+
+.card h3 {
+    font-size: 18pt;
+    font-weight: 500;
+}
+
+.card p {
+    font-size: 15pt;
+    font-weight: 400;
+}
+
+.spacer-25 {
+    height: 25px;
+}
+
+.spacer-50 {
+    height: 50px;
+}
+
+.spacer-100 {
+    height: 100px;
+}
+
+.center {
+    text-align: center;
+    margin: auto;
+}
+
+.footer {
+    background-color: rgb(0,173,239);
+    height: 150px;
+    padding: 10px;
+}
+
+.footer a {
+    color: white;
+}
+
+.whoWeAre h2 {
+    padding-top: 25px;
+}
+
+.whoWeAre h3 {
+    font-weight: 400;
+    font-size: 17pt;
+    line-height: 8px;
+}
+
+.whoWeAre a {
+    text-decoration: underline;
+    color: white;
+}
