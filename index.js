@@ -17,11 +17,11 @@ const transporter = nodemailer.createTransport({
     port: 587,
     auth: {
         user: process.env.EMAIL,
-        pass:  process.env.PASSWORD,
+        pass: process.env.PASSWORD,
     },
 });
 
-transporter.verify(function (error, success) {
+transporter.verify(function(error, success) {
     if (error) {
         console.log(error);
     } else {
@@ -85,7 +85,7 @@ app.post("/contact", (req, res) => {
             status: "ok",
             success: true
         });
-    }else {
+    } else {
         return res.send({
             status: "error",
             error: "An internal server error occured"
