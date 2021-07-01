@@ -55,13 +55,11 @@ app.get("/contact", (req, res) => {
 app.post("/contact", (req, res) => {
     if (req.query.sendEmail == "" || req.query.sendEmail == true) {
 
-        var body = req.body;
-
         const mail = {
             from: process.env.EMAIL,
             to: process.env.EMAIL,
-            subject: "Message from " + req.body.email + ": " + req.body.subject,
-            text: req.body.message,
+            subject: req.body.subject,
+            text: req.body.message + "\n\nSent from: " + req.body.email,
         };
 
         transporter.sendMail(mail, (err, data) => {
