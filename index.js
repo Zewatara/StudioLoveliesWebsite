@@ -57,6 +57,8 @@ app.get("/contact", (req, res) => {
 app.post("/contact", (req, res) => {
     if (req.query.sendEmail == "" || req.query.sendEmail == true) {
 
+        console.log(body);
+
         const mail = {
             from: req.body.email,
             to: process.env.EMAIL,
