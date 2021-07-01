@@ -12,6 +12,8 @@ app.set('views', __dirname + '/public/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
+console.log(process.env.EMAIL, process.env.PASSWORD);
+
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
