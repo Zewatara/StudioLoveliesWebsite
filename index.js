@@ -57,10 +57,8 @@ app.post("/contact", (req, res) => {
 
         var body = req.body;
 
-        console.log(body);
-
         const mail = {
-            from: req.body.email,
+            from: "Message from <" + req.body.email + ">",
             to: process.env.EMAIL,
             subject: req.body.subject,
             text: req.body.message,
