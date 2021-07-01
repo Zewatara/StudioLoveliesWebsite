@@ -48,15 +48,10 @@ function handleSubmit(e) {
 }
 
 function clearFields() {
-    var form = document.getElementById("form");
-    var fields = [];
-    for (el in form.children) {
-        if (form.children[el].tagName === "INPUT" || form.children[el].tagName === "TEXTAREA") fields.push(form[el].children[1]);
-    }
-
-    console.log(fields);
-
-    for (field in fields) {
-        fields[field].value = "";
-    }
+    var email = document.getElementById("email");
+    var subject = document.getElementById("subject");
+    var message = document.getElementById("message");
+    email.value = "";
+    subject.value = "";
+    message.value = "";
 }
