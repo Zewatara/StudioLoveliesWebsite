@@ -181,6 +181,10 @@ a {
     color: white;
 }
 
+.footer ul {
+    margin: 20px 0 0;
+}
+
 .footer .copyright span {
     color: white;
     margin-bottom: 10px;
