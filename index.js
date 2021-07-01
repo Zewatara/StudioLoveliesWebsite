@@ -13,11 +13,11 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.videotron.ca",
+    host: "smtp.gmail.com",
     port: 587,
     auth: {
-        user: "isaac.l@videotron.ca",
-        pass: "josee10",
+        user: process.env.EMAIL,
+        pass:  process.env.PASSWORD,
     },
 });
 
@@ -66,7 +66,7 @@ app.post("/contact", (req, res) => {
             subject: req.body.subject,
             text: req.body.message,
         };
-  
+
         transporter.sendMail(mail, (err, data) => {
             if (err) {
                 return res.send({
