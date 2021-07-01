@@ -78,15 +78,6 @@ app.post("/contact", (req, res) => {
                 });
             }
         });
-        return res.send({
-            status: "ok",
-            success: true
-        });
-    } else {
-        return res.send({
-            status: "error",
-            error: "An internal server error occured"
-        });
     }
 });
 
