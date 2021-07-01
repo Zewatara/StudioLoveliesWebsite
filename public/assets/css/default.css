@@ -181,9 +181,9 @@ a {
     color: white;
 }
 
-.footer .copyright {
+.footer .copyright span {
     color: white;
-    padding: 0 0 10px;
+    margin-bottom: 10px;
 }
 
 .whoWeAre h2 {
