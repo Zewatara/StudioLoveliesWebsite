@@ -181,6 +181,11 @@ a {
     color: white;
 }
 
+.footer .copyright {
+    color: white;
+    padding: 0 0 10px;
+}
+
 .whoWeAre h2 {
     padding-top: 25px;
 }
