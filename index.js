@@ -12,8 +12,6 @@ app.set('views', __dirname + '/public/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-console.log(process.env.EMAIL, process.env.PASSWORD);
-
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -56,6 +54,8 @@ app.get("/contact", (req, res) => {
 
 app.post("/contact", (req, res) => {
     if (req.query.sendEmail == "" || req.query.sendEmail == true) {
+
+        var body = req.body;
 
         console.log(body);
 
