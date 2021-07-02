@@ -9,7 +9,7 @@ body {
     padding: 0;
     margin: 0;
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - 150px);
 }
 
 a {
