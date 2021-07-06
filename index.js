@@ -53,8 +53,7 @@ app.get("/contact", (req, res) => {
 });
 
 app.get("/epik", (req, res) => {
-    return res.sendFile("epik.html", { root: "public/views" });
-    //return res.sendFile("damedaepik.mp4", { root: "public/assets" });
+    return res.sendFile("damedaepik.mp4", { root: "public/assets" });
 });
 
 app.post("/contact", (req, res) => {
