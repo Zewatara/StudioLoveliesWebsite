@@ -30,12 +30,16 @@
     </style>
 </head>
 
-<body>
+<body onload="onLoad();">
 
-    <video autoplay loop>
+    <video id="dameDaEpik" autoplay loop>
             <source src="assets/damedaepik.mp4" type="video/mp4">
         </video>
 
 </body>
+
+<script>
+    document.getElementById('dameDaEpik').play();
+</script>
 
 </html>
