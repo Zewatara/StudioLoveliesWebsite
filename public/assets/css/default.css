@@ -8,6 +8,8 @@ body {
     font-size: 15pt;
     padding: 0;
     margin: 0;
+    position: relative;
+    min-height: 100vh;
 }
 
 a {
@@ -19,7 +21,7 @@ a {
 }
 
 .header {
-    background-color: rgb(0,173,239);
+    background-color: rgb(0, 173, 239);
     color: white;
     position: absolute;
     top: 0;
@@ -68,16 +70,16 @@ a {
 .navlist li {
     float: left;
     height: 100%;
-    border: 1px solid rgba(0,160,220, 0.8);
+    border: 1px solid rgba(0, 160, 220, 0.8);
     transition: 0.5s ease;
 }
 
 .navlist li.current {
-    background-color: rgba(0,160,220, 0.8);
+    background-color: rgba(0, 160, 220, 0.8);
 }
 
 .navlist li:hover {
-    background-color: rgba(0,160,220, 0.8);
+    background-color: rgba(0, 160, 220, 0.8);
 }
 
 .navlist li a {
@@ -101,7 +103,7 @@ a {
 }
 
 .card {
-    background-color: rgb(0,173,239);
+    background-color: rgb(0, 173, 239);
     box-shadow: 5px 5px 10px rgba(150, 150, 150, 0.2);
     color: white;
     overflow: auto;
@@ -117,7 +119,7 @@ a {
 
 .card::-webkit-scrollbar-thumb {
     background: rgb(0, 160, 220);
-  }
+}
 
 .card::-webkit-scrollbar-thumb:hover {
     background: rgb(0, 150, 210);
@@ -167,13 +169,27 @@ a {
 }
 
 .footer {
-    background-color: rgb(0,173,239);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(0, 173, 239);
     height: 150px;
     padding: 10px;
 }
 
 .footer a {
     color: white;
+}
+
+.footer ul {
+    margin: 20px 0 0;
+}
+
+.footer .copyright span {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 12pt;
 }
 
 .whoWeAre h2 {

@@ -13,15 +13,15 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.videotron.ca",
+    host: "smtp.gmail.com",
     port: 587,
     auth: {
-        user: "isaac.l@videotron.ca",
-        pass: "josee10",
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
     },
 });
 
-transporter.verify(function (error, success) {
+transporter.verify(function(error, success) {
     if (error) {
         console.log(error);
     } else {
@@ -52,21 +52,21 @@ app.get("/contact", (req, res) => {
     return res.sendFile("contact.html", { root: "public/views" });
 });
 
+app.get("/epik", (req, res) => {
+    return res.sendFile("epik.html", { root: "public/views" });
+    //return res.sendFile("damedaepik.mp4", { root: "public/assets" });
+});
+
 app.post("/contact", (req, res) => {
     if (req.query.sendEmail == "" || req.query.sendEmail == true) {
 
-        return res.send({
-            status: "error",
-            error: "E-mail is currently not set-up"
-        });
-
         const mail = {
-            from: req.body.email,
-            to: "isaac.l@videotron.ca",
+            from: process.env.EMAIL,
+            to: process.env.EMAIL,
             subject: req.body.subject,
-            text: req.body.message,
+            text: req.body.message + "\n\nSent from: " + req.body.email,
         };
-  
+
         transporter.sendMail(mail, (err, data) => {
             if (err) {
                 return res.send({
@@ -80,15 +80,6 @@ app.post("/contact", (req, res) => {
                     success: true
                 });
             }
-        });
-        return res.send({
-            status: "ok",
-            success: true
-        });
-    }else {
-        return res.send({
-            status: "error",
-            error: "An internal server error occured"
         });
     }
 });

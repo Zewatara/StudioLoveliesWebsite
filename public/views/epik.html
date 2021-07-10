@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>EPIK MOMENTO</title>
+    <meta name="description" content="EPIK MOMENTO">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="assets/css/default.css" type="text/css">
+    <script src="assets/js/default.js"></script>
+
+    <style>
+        body {
+            background-color: black;
+        }
+        
+        video {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            max-width: 100vw;
+            margin: auto;
+            margin-top: auto;
+            margin-right: auto;
+            margin-bottom: auto;
+            margin-left: auto;
+        }
+    </style>
+</head>
+
+<body onload="onLoad();">
+
+    <video id="dameDaEpik" autoplay loop>
+        <source src="assets/damedaepik.mp4" type="video/mp4">
+    </video>
+
+</body>
+
+<script>
+    function onLoad() {
+        document.getElementById('dameDaEpik').play();
+    }
+</script>
+
+</html>
