@@ -1,6 +1,7 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
-const { getMaxListeners } = require("process");
+const mysql = require("mysql");
+const utils = require("./utils");
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
@@ -16,8 +17,8 @@ const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
     auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
+        user: process.env.EMAIL || undefined,
+        pass: process.env.PASSWORD || undefined,
     },
 });
 
@@ -34,14 +35,34 @@ app.listen(
     () => console.log("App live and listening on port " + PORT)
 );
 
-var sess;
+var connection = mysql.createPool({
+    host: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[3],
+    user: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[2].split(":")[0],
+    password: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[2].split(":")[1],
+    database: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[4].split("?")[0],
+    flags: "-FOUND_ROWS"
+});
 
 app.get("/", (req, res) => {
     return res.sendFile("index.html", { root: "public/views" });
 });
 
 app.get("/about", (req, res) => {
-    return res.sendFile("about.html", { root: "public/views" });
+    if (req.query && req.query.getTally != undefined) {
+        utils.selectFromDB(connection, function(success, resp) {
+            if (success) {
+                return res.send({
+                    status: "ok",
+                    data: resp
+                });
+            } else {
+                return res.send({
+                    status: "error",
+                    error: resp
+                });
+            }
+        }, "users", "", "");
+    } else return res.sendFile("about.html", { root: "public/views" });
 });
 
 app.get("/projects", (req, res) => {
