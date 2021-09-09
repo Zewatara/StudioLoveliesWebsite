@@ -11,7 +11,7 @@ function setUpTally() {
             h3 = document.createElement("H3");
             coinCoins = "coin";
             if (res.data[i].coins != 1) coinCoins = "coins";
-            h3.innerHTML = res.data[i].username + ": " + res.data[i].coins + " " + coinCoins;
+            h3.innerHTML = res.data[i].username.split("#")[0] + ": " + res.data[i].coins + " " + coinCoins;
             h3.style.fontSize = "15pt";
 
             li.appendChild(h3);
