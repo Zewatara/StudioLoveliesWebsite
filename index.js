@@ -35,13 +35,13 @@ app.listen(
     () => console.log("App live and listening on port " + PORT)
 );
 
-/*var connection = mysql.createPool({
+var connection = mysql.createPool({
     host: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[3],
     user: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[2].split(":")[0],
     password: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[2].split(":")[1],
     database: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[4].split("?")[0],
     flags: "-FOUND_ROWS"
-});*/
+});
 
 app.get("/", (req, res) => {
     return res.sendFile("index.html", { root: "public/views" });
