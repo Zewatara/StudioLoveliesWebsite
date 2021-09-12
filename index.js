@@ -264,13 +264,13 @@ client.on('interactionCreate', async interaction => {
                         resp.sort(function(a, b) { return b.cost - a.cost; });
                         utils.selectFromDB(connection, function(success2, resp2) {
                             if (success2) {
-                                console.log((parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)));
-                                utils.updateRow(connection, "user", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
+                                utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
+                                    interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
                                     interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! " + goodBoyCoin + "\n\nRules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
-                                    interaction.reply("Reward selected: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward + ", cost: " + resp[parseInt(interaction.options.get("reward").value) - 1].cost);
+                                    interaction.guild.channels.fetch("886682255920074793").then(channel => channel.send("<@&885711758759723068> " + interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\""));
                                 });
                             } else {
-                                return interaction.reply("Something went wrong, please try again later");
+                                return interaction.reply("Something went wrong, please try again later " + resp);
                             }
                         }, "users", "userID", interaction.user.id);
                     } else {
