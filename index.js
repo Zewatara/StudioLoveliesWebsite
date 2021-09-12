@@ -330,6 +330,7 @@ client.on('interactionCreate', async interaction => {
         case "give":
             if (parseInt(interaction.options.get("amount").value) < 0) return interaction.reply("Good Boy coins must be earned, not stolen.");
             if (parseInt(interaction.options.get("amount").value) === 0) return;
+            if (interaction.user.id === interaction.options.get("username").user.id) return interaction.reply("Usually \"give\" means **giving** to someone else... not yourself.");
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
                     utils.selectFromDB(connection, function(success2, resp2) {
