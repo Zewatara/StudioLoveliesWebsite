@@ -206,24 +206,6 @@ client.on("ready", () => {
     console.info("Ready");
 });
 
-client.on('raw', packet => {
-    if (!['MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE'].includes(packet.t)) return;
-    const channel = client.channels.cache.get(packet.d.channel_id);
-    if (channel.messages.cache.has(packet.d.message_id)) return;
-    channel.messages.fetch(packet.d.message_id).then(message => {
-        const emoji = packet.d.emoji.id ? `${packet.d.emoji.name}:${packet.d.emoji.id}` : packet.d.emoji.name;
-        const reaction = message.reactions.cache.get(emoji);
-        if (reaction) reaction.users.cache.set(packet.d.user_id, client.users.cache.get(packet.d.user_id));
-        if (packet.t === 'MESSAGE_REACTION_ADD') {
-            client.emit('messageReactionAdd', reaction, client.users.cache.get(packet.d.user_id));
-            console.log(`a reaction is added to a message1`);
-        }
-        if (packet.t === 'MESSAGE_REACTION_REMOVE') {
-            client.emit('messageReactionRemove', reaction, client.users.cache.get(packet.d.user_id));
-        }
-    });
-});
-
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
@@ -316,10 +298,6 @@ client.on('interactionCreate', async interaction => {
         default:
             break;
     }
-});
-
-client.on("messageReactionAdd", function(messageReaction, user) {
-    console.log(`a reaction is added to a message2`);
 });
 
 client.login(TOKEN);
