@@ -293,7 +293,7 @@ client.on('interactionCreate', async interaction => {
 
                                         if (resp[parseInt(interaction.options.get("reward").value) - 1].reward === "Children of Epik Membership") {
                                             interaction.member.roles.add("852675470319026177");
-                                            client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("852675207290552321").then(channel => channel.send("<@" + interaction.user.id + ">", { files: ["https://c.tenor.com/Y8IgWKGfKwoAAAAC/welcome-to-the-family-son-resident-evil7.gif"] })));
+                                            client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("852675207290552321").then(channel => channel.send({ content: "<@" + interaction.user.id + ">", files: ["https://c.tenor.com/Y8IgWKGfKwoAAAAC/welcome-to-the-family-son-resident-evil7.gif"] })));
 
                                             client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send(interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\"")));
                                         } else client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send("<@&885711758759723068> " + interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\"")));
