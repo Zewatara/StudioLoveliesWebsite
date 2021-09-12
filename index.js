@@ -145,7 +145,8 @@ const rest = new REST({ version: '9' }).setToken(TOKEN);
         console.log('Started refreshing application (/) commands.');
 
         await rest.put(
-            Routes.applicationGuildCommands("884981485692669993", "842146071626514462"), { body: commands }
+            Routes.applicationGuildCommands("884981485692669993", "842146071626514462"), { body: commands },
+            Routes.applicationGuildCommands("884981485692669993", "274342839041916928"), { body: commands }
         );
 
         console.log('Successfully reloaded application (/) commands.');
@@ -300,7 +301,7 @@ client.on('interactionCreate', async interaction => {
                                     return interaction.reply("You don't have enough Good Boy coins to buy this reward!");
                                 }
                             } else {
-                                return interaction.reply("Something went wrong, please try again later " + resp);
+                                return interaction.reply("Something went wrong, please try again later");
                             }
                         }, "users", "userID", interaction.user.id);
                     } else {
