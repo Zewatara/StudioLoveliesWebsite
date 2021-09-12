@@ -47,5 +47,9 @@ module.exports = {
         connection.query("UPDATE " + table + " SET " + row + "=" + value + " WHERE " + anchor[0] + "=" + anchor[1] + ";");
 
         callback();
+    },
+
+    isInt(n) {
+        return n % 1 === 0;
     }
 };
