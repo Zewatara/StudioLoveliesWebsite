@@ -301,11 +301,11 @@ client.on('interactionCreate', async interaction => {
                                     return interaction.reply("You don't have enough Good Boy coins to buy this reward!");
                                 }
                             } else {
-                                return interaction.reply("Something went wrong, please try again later");
+                                return interaction.channel.send("Something went wrong, please try again later");
                             }
                         }, "users", "userID", interaction.user.id);
                     } else {
-                        return interaction.reply("Something went wrong, please try again later");
+                        return interaction.channel.send("Something went wrong, please try again later");
                     }
                 }, "shop");
             } else {
@@ -323,7 +323,7 @@ client.on('interactionCreate', async interaction => {
                             .setFooter("Made by cunt#4811");
                         interaction.reply({ embeds: [embed] });
                     } else {
-                        return interaction.reply("Something went wrong, please try again later");
+                        return interaction.channel.send("Something went wrong, please try again later");
                     }
                 }, "shop");
             }
