@@ -328,7 +328,7 @@ client.on('interactionCreate', async interaction => {
             }
             break;
         case "give":
-            if (parseInt(interaction.options.get("amount").value) < 0) return interaction.reply("Don't be such a Ross, Good Boy coins must be earned, not stolen.");
+            if (parseInt(interaction.options.get("amount").value) < 0) return interaction.reply("Don't be such a [REDACTED]. Good Boy coins must be earned, not stolen.");
             if (parseInt(interaction.options.get("amount").value) === 0) return;
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
