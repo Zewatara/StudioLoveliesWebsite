@@ -145,7 +145,7 @@ const rest = new REST({ version: '9' }).setToken(TOKEN);
         console.log('Started refreshing application (/) commands.');
 
         await rest.put(
-            Routes.applicationGuildCommands("884981485692669993", "274342839041916928"), { body: commands }
+            Routes.applicationGuildCommands("884981485692669993", "842146071626514462"), { body: commands }
         );
 
         console.log('Successfully reloaded application (/) commands.');
