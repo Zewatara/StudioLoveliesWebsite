@@ -294,7 +294,7 @@ client.on('interactionCreate', async interaction => {
 
                                         if (resp[parseInt(interaction.options.get("reward").value) - 1].reward === "Children of Epik Membership") {
                                             interaction.member.roles.add("852675470319026177");
-                                            interaction.channels.fetch("852675207290552321").then(channel => channel.send("<@" + interaction.user.id + ">\nhttps://tenor.com/view/welcome-to-the-family-son-resident-evil7-welcome-to-the-family-justnads-resident-evil-gif-20743783"));
+                                            client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("852675207290552321").then(channel => channel.send("<@" + interaction.user.id + ">\nhttps://tenor.com/view/welcome-to-the-family-son-resident-evil7-welcome-to-the-family-justnads-resident-evil-gif-20743783")));
                                         }
                                     });
                                 } else {
