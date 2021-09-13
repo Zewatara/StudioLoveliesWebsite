@@ -351,7 +351,7 @@ client.on('interactionCreate', async interaction => {
                                     });
                                 } else {
                                     if (parseInt(resp2[0].coins) >= parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)) {
-                                        var orderID = utils.generateID(8);
+                                        var orderID = utils.generateId(8);
 
                                         utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, true], function() {
                                             utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
