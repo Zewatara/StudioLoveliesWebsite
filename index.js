@@ -408,13 +408,13 @@ client.on('interactionCreate', async interaction => {
                 .setDescription("<required>, [optional]")
                 .setColor('#00ADEF');
             for (i in commands) {
-                var name = commands[i].name;
+                var name = "/" + commands[i].name;
                 if (commands[i].options != undefined) {
                     var required1;
                     var required2;
                     for (ind in commands[i].options) {
                         if (commands[i].options[ind].required) {
-                            required1 = "<";
+                            required1 = " <";
                             required2 = ">";
                         } else {
                             required1 = "[";
