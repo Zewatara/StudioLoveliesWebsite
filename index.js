@@ -308,9 +308,9 @@ client.on('interactionCreate', async interaction => {
                     if (success) {
                         var rand = Math.floor(Math.random() * resp.length);
                         interaction.reply("<@" + resp[rand].userID + "> has won the raffle! 🎫");
-                        utils.rawQuery(connection, "DELETE FROM raffle", function(success) {});
+                        utils.rawQuery(connection, "DELETE FROM raffle", function() {});
                     } else {
-                        interaction.reply("Something went wrong, please try again later");
+                        interaction.reply("Raffle is empty!");
                     }
                 }, "raffle");
                 break;
