@@ -425,7 +425,7 @@ client.on('interactionCreate', async interaction => {
                 }
                 embed.addField(name, commands[i].description);
             }
-            embed.setFooter("Made by cunt#4811", client.users.fetch("375485987893149696").then(cunt => cunt.user.avatarURL));
+            embed.setFooter("Made by cunt#4811", client.users.fetch("375485987893149696").then(cunt => cunt.avatarURL()));
             interaction.reply({ embeds: [embed] });
             break;
         case "give":
