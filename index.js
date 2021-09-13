@@ -66,8 +66,8 @@ var connection = mysql.createPool(dbOptions);
 const TOKEN = process.env.BOT_TOKEN || config.token;
 const goodBoyCoin = "<:goodboycoin:625181771335729173>";
 const commands = [{
-        name: 'grant',
-        description: 'Grants Good Boy coins',
+        name: "grant",
+        description: "Grants Good Boy coins",
         options: [{
                 name: "username",
                 description: "The username of the user you want to grant coins to",
@@ -83,7 +83,7 @@ const commands = [{
         ]
     },
     {
-        name: 'setcoins',
+        name: "setcoins",
         description: "Sets someone's Good Boy coin tally",
         options: [{
                 name: "username",
@@ -105,8 +105,8 @@ const commands = [{
         description: "Get a random ticket in the raffle"
     },
     {
-        name: 'refund',
-        description: 'Refund an order',
+        name: "refund",
+        description: "Refund an order",
         options: [{
             name: "orderid",
             description: "The ID of the order you want to refund",
@@ -116,7 +116,7 @@ const commands = [{
     },
     {
         name: 'tally',
-        description: 'Grants Good Boy coins',
+        description: "Get a user's amount of coins",
         options: [{
             name: "username",
             description: "The username of the user you want to get the tally from",
@@ -172,7 +172,10 @@ const rest = new REST({ version: '9' }).setToken(TOKEN);
         console.log('Started refreshing application (/) commands.');
 
         await rest.put(
-            Routes.applicationGuildCommands("884981485692669993", "842146071626514462"), { body: commands },
+            Routes.applicationGuildCommands("884981485692669993", "842146071626514462"), { body: commands }
+        );
+
+        await rest.put(
             Routes.applicationGuildCommands("884981485692669993", "274342839041916928"), { body: commands }
         );
 
