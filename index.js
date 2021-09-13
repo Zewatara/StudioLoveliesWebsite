@@ -417,7 +417,7 @@ client.on('interactionCreate', async interaction => {
                             required1 = " <";
                             required2 = ">";
                         } else {
-                            required1 = "[";
+                            required1 = " [";
                             required2 = "]";
                         }
                         name += required1 + commands[i].options[ind].name + required2;
