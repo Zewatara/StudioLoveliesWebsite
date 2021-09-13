@@ -347,7 +347,7 @@ client.on('interactionCreate', async interaction => {
                                         if (exists) {
                                             exist = true;
                                             console.log(interaction);
-                                            return interaction.reply("You can only buy 1 ticket per raffle.");
+                                            return /*interaction.reply("You can only buy 1 ticket per raffle.")*/;
                                         }
                                     });
                                 }
