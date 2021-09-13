@@ -346,9 +346,8 @@ client.on('interactionCreate', async interaction => {
                                         if (!exists) {
                                             utils.insertToDB(connection, "raffle", "", [interaction.user.id, interaction.user.tag], function() {});
                                         } else {
-                                            return interaction.channel.send("You can only buy 1 ticket per raffle.");
+                                            return interaction.reply("You can only buy 1 ticket per raffle.");
                                         }
-                                        return;
                                     });
                                 }
                                 if (parseInt(resp2[0].coins) >= parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)) {
