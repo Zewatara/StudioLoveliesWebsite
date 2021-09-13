@@ -43,11 +43,27 @@ module.exports = {
 
 
     updateRow(connection, table, row, value, anchor, callback) {
-
-        console.log("UPDATE " + table + " SET " + row + "=" + value + " WHERE " + anchor[0] + "=" + anchor[1] + ";");
-
         connection.query("UPDATE " + table + " SET " + row + "=" + value + " WHERE " + anchor[0] + "=" + anchor[1] + ";");
-
         callback();
+    },
+
+    rawQuery(connection, query, callback) {
+        connection.query(query, function(err) {
+            if (err) {
+                callback(false, err);
+                return;
+            } else callback(true);
+        });
+    },
+
+    generateId(length) {
+        var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var result = "";
+        for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+        return result;
+    },
+
+    isInt(n) {
+        return n % 1 === 0;
     }
 };
