@@ -355,7 +355,11 @@ client.on('interactionCreate', async interaction => {
                                         });
                                     }
 
-                                    if (exist) return;
+                                    console.log(exist);
+
+                                    if (exist) {
+                                        return;
+                                    }
 
                                     var orderID = utils.generateId(8);
 
