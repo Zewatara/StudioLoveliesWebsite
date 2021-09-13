@@ -349,8 +349,10 @@ client.on('interactionCreate', async interaction => {
                                             } else {
                                                 return interaction.reply("You can only buy 1 ticket per raffle.");
                                             }
+                                            return;
                                         });
                                     }
+                                    return;
 
                                     var orderID = utils.generateId(8);
 
