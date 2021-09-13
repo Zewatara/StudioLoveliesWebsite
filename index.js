@@ -229,6 +229,18 @@ client.on("ready", () => {
     console.info("Ready");
 });
 
+client.on("error", error => {
+    console.log(error);
+});
+
+process.on("uncaughtException", error => {
+    console.log(error);
+});
+
+process.on("uncaughtRejection", error => {
+    console.log(error);
+});
+
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
