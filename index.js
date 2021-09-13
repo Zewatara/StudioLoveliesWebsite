@@ -345,7 +345,7 @@ client.on('interactionCreate', async interaction => {
                                     utils.existsInTable(connection, "raffle", "userID", interaction.user.id, function(exists) {
                                         if (exists) {
                                             interaction.reply("You can only buy 1 ticket per raffle.");
-                                            break;
+                                            return;
                                         } else {
                                             utils.insertToDB(connection, "raffle", "", [interaction.user.id, interaction.user.tag], function() {});
                                         }
