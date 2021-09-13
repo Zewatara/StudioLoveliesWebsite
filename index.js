@@ -339,6 +339,8 @@ client.on('interactionCreate', async interaction => {
                         resp.sort(function(a, b) { return b.cost - a.cost; });
                         utils.selectFromDB(connection, function(success2, resp2) {
                             if (success2) {
+                                var exist = false;
+
                                 if (parseInt(resp2[0].coins) >= parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)) {
                                     if (parseInt(interaction.options.get("reward").value) === 6) {
                                         if (client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "852675470319026177")))) return interaction.reply("You already are a Children of Epik.");
@@ -347,11 +349,13 @@ client.on('interactionCreate', async interaction => {
                                             if (!exists) {
                                                 utils.insertToDB(connection, "raffle", "", [interaction.user.id, interaction.user.tag], function() {});
                                             } else {
+                                                exist = true;
                                                 return interaction.reply("You can only buy 1 ticket per raffle.");
                                             }
-                                            return;
                                         });
                                     }
+
+                                    if (exist) return;
 
                                     var orderID = utils.generateId(8);
 
