@@ -298,7 +298,7 @@ client.on('interactionCreate', async interaction => {
                         utils.selectFromDB(connection, function(success2, resp2) {
                             if (success2) {
                                 if (parseInt(interaction.options.get("reward").value) === 6) {
-                                    if (interaction.member.roles.cache.some(role => role.id === "852675470319026177")) return interaction.reply("You already are a Children of Epik.");
+                                    if (interaction.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "852675470319026177")))) return interaction.reply("You already are a Children of Epik.");
                                 }
                                 if (parseInt(interaction.options.get("reward").value) === 7) {
                                     utils.existsInTable(connection, "raffle", "userID", interaction.user.id, function(exists) {
