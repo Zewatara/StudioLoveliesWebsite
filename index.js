@@ -108,7 +108,7 @@ const commands = [{
         name: 'refund',
         description: 'Refund an order',
         options: [{
-            name: "orderID",
+            name: "orderid",
             description: "The ID of the order you want to refund",
             type: 3,
             required: true
