@@ -99,6 +99,21 @@ const commands = [{
             }
         ]
     },
+
+    {
+        name: "raffle",
+        description: "Get a random ticket in the raffle"
+    },
+    {
+        name: 'refund',
+        description: 'Refund an order',
+        options: [{
+            name: "orderID",
+            description: "The ID of the order you want to refund",
+            type: 3,
+            required: true
+        }]
+    },
     {
         name: 'tally',
         description: 'Grants Good Boy coins',
@@ -135,6 +150,16 @@ const commands = [{
                 required: true
             }
         ]
+    },
+
+    {
+        name: "shoprules",
+        description: "Display the Good Boy coin shop rules"
+    },
+
+    {
+        name: "help",
+        description: "Display available commands"
     }
 ];
 
@@ -272,17 +297,16 @@ client.on('interactionCreate', async interaction => {
                     }
                 });
                 break;
-            case "tally":
-                var user;
-                if (interaction.options.get("username") != undefined) user = interaction.options.get("username").user.id;
-                else user = interaction.user.id;
+            case "raffle":
                 utils.selectFromDB(connection, function(success, resp) {
                     if (success) {
-                        interaction.reply("<@" + user + "> has " + resp[0].coins + " Good Boy coins " + goodBoyCoin);
+                        var rand = Math.floor(Math.random() * resp.length);
+                        interaction.reply("<@" + resp[rand].userID + "> has won the raffle! 🎫");
+                        utils.rawQuery(connection, "DELETE FROM raffle", function(success) {});
                     } else {
-                        interaction.reply("Couldn't find user <@" + user + "> in the tally!");
+                        interaction.reply("Something went wrong, please try again later");
                     }
-                }, "users", "userID", user);
+                }, "raffle");
                 break;
             default:
                 break;
@@ -290,6 +314,18 @@ client.on('interactionCreate', async interaction => {
     }
 
     switch (interaction.commandName.toLowerCase()) {
+        case "tally":
+            var user;
+            if (interaction.options.get("username") != undefined) user = interaction.options.get("username").user.id;
+            else user = interaction.user.id;
+            utils.selectFromDB(connection, function(success, resp) {
+                if (success) {
+                    interaction.reply("<@" + user + "> has " + resp[0].coins + " Good Boy coins " + goodBoyCoin);
+                } else {
+                    interaction.reply("Couldn't find user <@" + user + "> in the tally!");
+                }
+            }, "users", "userID", user);
+            break;
         case "buy":
             if (interaction.options.get("reward") != undefined) {
                 utils.selectFromDB(connection, function(success, resp) {
@@ -309,20 +345,24 @@ client.on('interactionCreate', async interaction => {
                                     });
                                 } else {
                                     if (parseInt(resp2[0].coins) >= parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)) {
-                                        utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
-                                            interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
-                                            interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! " + goodBoyCoin + "\n\nRules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
+                                        var orderID = utils.generateID(8);
 
-                                            if (parseInt(interaction.options.get("reward").value) === 6) {
-                                                client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.add("852675470319026177")));
-                                                client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("852675207290552321").then(channel => channel.send({
-                                                    content: "<@" + interaction.user.id + ">",
-                                                    files: ["https://c.tenor.com/Y8IgWKGfKwoAAAAC/welcome-to-the-family-son-resident-evil7.gif"]
-                                                })));
-                                            }
-                                            if (mutedCommands.includes(parseInt(interaction.options.get("reward").value))) {
-                                                client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send(interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\"")));
-                                            } else client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send("<@&885711758759723068> " + interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\"")));
+                                        utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, true], function() {
+                                            utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
+                                                interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
+                                                interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! Order ID: " + orderID + " " + goodBoyCoin + "\n\nRules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
+
+                                                if (parseInt(interaction.options.get("reward").value) === 6) {
+                                                    client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.add("852675470319026177")));
+                                                    client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("852675207290552321").then(channel => channel.send({
+                                                        content: "<@" + interaction.user.id + ">",
+                                                        files: ["https://c.tenor.com/Y8IgWKGfKwoAAAAC/welcome-to-the-family-son-resident-evil7.gif"]
+                                                    })));
+                                                }
+                                                if (mutedCommands.includes(parseInt(interaction.options.get("reward").value))) {
+                                                    client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send(interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\", Order ID: " + orderID)));
+                                                } else client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send("<@&885711758759723068> " + interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\", Order ID: " + orderID)));
+                                            });
                                         });
                                     } else {
                                         return interaction.reply("You don't have enough Good Boy coins to buy this reward!");
@@ -356,9 +396,38 @@ client.on('interactionCreate', async interaction => {
                 }, "shop");
             }
             break;
+        case "shoprules":
+            interaction.reply("Rules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
+            break;
+        case "help":
+            var embed = new Discord.MessageEmbed()
+                .setTitle("Brent command list")
+                .setDescription("<required>, [optional]")
+                .setColor('#00ADEF');
+            for (i in commands) {
+                var name = commands[i].name;
+                if (commands[i].options.length > 0) {
+                    var required1;
+                    var required2;
+                    for (ind in commands[i].options) {
+                        if (commands[i].options[ind].required) {
+                            required1 = "<";
+                            required2 = ">";
+                        } else {
+                            required1 = "[";
+                            required2 = "]";
+                        }
+                        name += required1 + commands[i].options[ind].name + required2;
+                    }
+                }
+                embed.addField(name, commands[i].description);
+            }
+            embed.setFooter("Made by cunt#4811");
+            interaction.reply({ embeds: [embed] });
+            break;
         case "give":
             if (parseInt(interaction.options.get("amount").value) < 0) return interaction.reply("Good Boy coins must be earned, not stolen.");
-            if (parseInt(interaction.options.get("amount").value) === 0) return;
+            if (parseInt(interaction.options.get("amount").value) === 0) return interaction.reply("Do not waste my time, this is a serious job.");
             if (interaction.user.id === interaction.options.get("username").user.id) return interaction.reply("Usually \"give\" means **giving** to someone else... not yourself.");
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
