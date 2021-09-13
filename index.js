@@ -409,7 +409,7 @@ client.on('interactionCreate', async interaction => {
                 .setColor('#00ADEF');
             for (i in commands) {
                 var name = commands[i].name;
-                if (commands[i].options.length > 0) {
+                if (commands[i].options != undefined) {
                     var required1;
                     var required2;
                     for (ind in commands[i].options) {
