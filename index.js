@@ -410,7 +410,7 @@ client.on('interactionCreate', async interaction => {
                 .setTitle("Brent command list")
                 .setDescription("<required>, [optional]")
                 .setColor("#00ADEF");
-            for (var i = 3; i < commands.length; i++) {
+            for (var i = 4; i < commands.length; i++) {
                 var name = "/" + commands[i].name;
                 if (commands[i].options != undefined) {
                     var required1;
