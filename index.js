@@ -391,7 +391,7 @@ client.on('interactionCreate', async interaction => {
                             embed.addField((parseInt(i) + 1) + ". " + resp[i].reward, resp[i].cost + " Coins");
                         }
                         embed.setDescription("Choose your reward using the number attributed to it!")
-                            .setFooter("Made by cunt#4811");
+                            .setFooter("Made by cunt#4811", client.users.fetch("375485987893149696").then(cunt => cunt.avatarURL));
                         interaction.reply({ embeds: [embed] });
                     } else {
                         return interaction.channel.send("Something went wrong, please try again later");
@@ -406,8 +406,8 @@ client.on('interactionCreate', async interaction => {
             var embed = new Discord.MessageEmbed()
                 .setTitle("Brent command list")
                 .setDescription("<required>, [optional]")
-                .setColor('#00ADEF');
-            for (i in commands) {
+                .setColor("#00ADEF");
+            for (var i = 3; i < commands.length; i++) {
                 var name = "/" + commands[i].name;
                 if (commands[i].options != undefined) {
                     var required1;
@@ -425,7 +425,7 @@ client.on('interactionCreate', async interaction => {
                 }
                 embed.addField(name, commands[i].description);
             }
-            embed.setFooter("Made by cunt#4811");
+            embed.setFooter("Made by cunt#4811", client.users.fetch("375485987893149696").then(cunt => cunt.avatarURL));
             interaction.reply({ embeds: [embed] });
             break;
         case "give":
