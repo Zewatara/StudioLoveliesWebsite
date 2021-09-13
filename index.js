@@ -187,6 +187,9 @@ const rest = new REST({ version: '9' }).setToken(TOKEN);
 
 var client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 
+var cuntAvatar;
+client.users.fetch("375485987893149696").then(cunt => cuntAvatar = cunt.avatarURL());
+
 app.get("/", (req, res) => {
     return res.sendFile("index.html", { root: "public/views" });
 });
@@ -425,7 +428,7 @@ client.on('interactionCreate', async interaction => {
                 }
                 embed.addField(name, commands[i].description);
             }
-            embed.setFooter("Made by cunt#4811", client.users.fetch("375485987893149696").then(cunt => cunt.avatarURL()));
+            embed.setFooter("Made by cunt#4811", cuntAvatar);
             interaction.reply({ embeds: [embed] });
             break;
         case "give":
