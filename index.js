@@ -394,7 +394,7 @@ client.on('interactionCreate', async interaction => {
                             embed.addField((parseInt(i) + 1) + ". " + resp[i].reward, resp[i].cost + " Coins");
                         }
                         embed.setDescription("Choose your reward using the number attributed to it!")
-                            .setFooter("Made by cunt#4811", client.users.fetch("375485987893149696").then(cunt => cunt.avatarURL));
+                            .setFooter("Made by cunt#4811", cuntAvatar);
                         interaction.reply({ embeds: [embed] });
                     } else {
                         return interaction.channel.send("Something went wrong, please try again later");
