@@ -348,6 +348,7 @@ client.on('interactionCreate', async interaction => {
                                         } else {
                                             return interaction.reply("You can only buy 1 ticket per raffle.");
                                         }
+                                        return;
                                     });
                                 }
                                 if (parseInt(resp2[0].coins) >= parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)) {
