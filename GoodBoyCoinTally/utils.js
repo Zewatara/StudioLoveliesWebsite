@@ -43,6 +43,7 @@ module.exports = {
 
 
     updateRow(connection, table, row, value, anchor, callback) {
+        console.log("UPDATE " + table + " SET " + row + "=" + value + " WHERE " + anchor[0] + "=" + anchor[1] + ";");
         connection.query("UPDATE " + table + " SET " + row + "=" + value + " WHERE " + anchor[0] + "=" + anchor[1] + ";");
         callback();
     },

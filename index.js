@@ -308,7 +308,9 @@ client.on('interactionCreate', async interaction => {
                     if (success) {
                         var rand = Math.floor(Math.random() * resp.length);
                         interaction.reply("<@" + resp[rand].userID + "> has won the raffle! 🎫");
-                        utils.rawQuery(connection, "DELETE FROM raffle", function() {});
+                        utils.rawQuery(connection, "DELETE FROM raffle;", function() {
+                            utils.rawQuery(connection, "UPDATE orders SET refundable=0 WHERE rewardID=7 AND refundable=1;");
+                        });
                     } else {
                         interaction.reply("Raffle is empty!");
                     }
@@ -325,7 +327,7 @@ client.on('interactionCreate', async interaction => {
                                             if (parseInt(resp[0].rewardID) === 6) {
                                                 client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.remove("852675470319026177")));
                                             } else if (parseInt(resp[0].rewardID) === 7) {
-                                                utils.rawQuery(connection, "DELETE FROM raffle WHERE userID=" + resp[0].userID, function() {});
+                                                utils.rawQuery(connection, "DELETE FROM raffle WHERE userID=" + resp[0].userID + ";", function() {});
                                             }
                                             interaction.reply("Order #" + interaction.options.get("orderid").value + " has been refunded.");
                                             client.users.fetch(resp[0].userID).then(user => user.send("Order # " + interaction.options.get("orderid").value + ": refund confirmation\nYou have been refunded " + resp[0].cost + " Good Boy coins."));
