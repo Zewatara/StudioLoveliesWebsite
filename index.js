@@ -530,6 +530,7 @@ client.on('interactionCreate', async interaction => {
             if (interaction.user.id === interaction.options.get("username").user.id) return interaction.reply("Usually \"give\" means **giving** to someone else... not yourself.");
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
+                    if (parseInt(resp[0].coins) < parseInt(interaction.options.get("amount").value)) return interaction.reply("You do not have enough Good Boy coins.");
                     utils.selectFromDB(connection, function(success2, resp2) {
                         utils.updateRow(connection, "users", "coins", (resp[0].coins - parseInt(interaction.options.get("amount").value)), ["userID", interaction.user.id], function() {
                             if (success2) {
