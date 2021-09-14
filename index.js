@@ -330,7 +330,7 @@ client.on('interactionCreate', async interaction => {
                                                 utils.rawQuery(connection, "DELETE FROM raffle WHERE userID=" + resp[0].userID + ";", function() {});
                                             }
                                             interaction.reply("Order #" + interaction.options.get("orderid").value + " has been refunded.");
-                                            client.users.fetch(resp[0].userID).then(user => user.send("Order # " + interaction.options.get("orderid").value + ": refund confirmation\nYou have been refunded " + resp[0].cost + " Good Boy coins."));
+                                            client.users.fetch(resp[0].userID).then(user => user.send("Order #" + interaction.options.get("orderid").value + ": refund confirmation\nYou have been refunded " + resp[0].cost + " Good Boy coins."));
                                         });
                                     } else {
                                         interaction.reply("Something went wrong, couldn't refund this order.\nPlease contact cunt#4811");
