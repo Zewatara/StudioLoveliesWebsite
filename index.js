@@ -314,6 +314,30 @@ client.on('interactionCreate', async interaction => {
                     }
                 }, "raffle");
                 break;
+            case "refund":
+                utils.selectFromDB(connection, function(success, resp) {
+                    if (success) {
+                        if (resp.refundable) {
+                            utils.updateRow(connection, "orders", "refundable", 0, ["orderID", interaction.options.get("orderid").value], function() {
+                                utils.selectFromDB(connection, function(success, resp2) {
+                                    if (success) {
+                                        utils.updateRow(connection, "users", "coins", (parseInt(resp2.coins) + parseInt(resp.cost)), ["userID", resp.userID], function() {
+                                            interaction.reply("Order #" + interaction.options.get("orderid").value + " has been refunded.");
+                                            client.users.fetch(resp.userID).then(user => user.send("Order # " + interaction.options.get("orderid").value + ": refund confirmation\nYou have been refunded " + resp.cost + " Good Boy coins."));
+                                        });
+                                    } else {
+                                        interaction.reply("Something went wrong, couldn't refund this order.\nPlease contact cunt#4811");
+                                    }
+                                }, "users", "userID", resp.userID);
+                            });
+                        } else {
+                            interaction.reply("This order cannot be refunded!");
+                        }
+                    } else {
+                        interaction.reply("Couldn't find order #" + interaction.options.get("orderid").value);
+                    }
+                }, "orders", "orderID", interaction.options.get("orderid").value);
+                break;
             default:
                 break;
         }
@@ -410,7 +434,9 @@ client.on('interactionCreate', async interaction => {
                             .setThumbnail("https://i.imgur.com/FgDhpVA.png")
                             .setColor('#00ADEF');
                         for (i in resp) {
-                            embed.addField((parseInt(i) + 1) + ". " + resp[i].reward, resp[i].cost + " Coins");
+                            coinCoins = " coin";
+                            if (resp[i].cost != 1) coinCoins = " coins";
+                            embed.addField((parseInt(i) + 1) + ". " + resp[i].reward, resp[i].cost + coinCoins);
                         }
                         embed.setDescription("Choose your reward using the number attributed to it!")
                             .setFooter("Made by cunt#4811", cuntAvatar);
