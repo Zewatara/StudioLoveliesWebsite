@@ -115,6 +115,16 @@ const commands = [{
         }]
     },
     {
+        name: "complete",
+        description: "Complete an order",
+        options: [{
+            name: "orderid",
+            description: "The ID of the order you completed",
+            type: 3,
+            required: true
+        }]
+    },
+    {
         name: 'tally',
         description: "Get a user's amount of coins",
         options: [{
@@ -275,6 +285,7 @@ process.on("uncaughtRejection", error => {
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
+    //Admin only
     if (interaction.user.id === "195265775664103424" || interaction.user.id === "375485987893149696") {
         switch (interaction.commandName.toLowerCase()) {
             case "grant":
@@ -350,6 +361,35 @@ client.on('interactionCreate', async interaction => {
         }
     }
 
+    //Studio Lovelies rewards only
+    var rewards = await client.guilds.fetch("274342839041916928").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "885711758759723068")));;
+
+    if (rewards) {
+        switch (interaciton.commandName.toLowerCase()) {
+            case "complete":
+                utils.selectFromDB(connection, function(success, resp) {
+                    if (success) {
+                        if (resp[0].completed != "1") {
+                            utils.updateRow(connection, "orders", "completed", "1", ["orderID", resp[0].orderID], function() {
+                                utils.updateRow(connection, "orders", "refundable", "0", ["orderID", resp[0].orderID], function() {
+                                    interaction.reply("Order #" + resp[0].orderID + " completed by <@" + interaction.user.id + ">.");
+                                    client.users.fetch(resp[0].userID).then(user => user.send(interaction.user.tag + " has completed your order!\n\nOrder #" + resp[0].orderID + ", " + resp[0].reward + "."));
+                                });
+                            });
+                        } else {
+                            interaction.reply("This order cannot be or was already completed.");
+                        }
+                    } else {
+                        interaction.reply("Couldn't find Order #" + interaction.options.get("orderid").value);
+                    }
+                }, "orders", "orderID", interaction.options.get("orderid").value);
+                break;
+            default:
+                break;
+        }
+    }
+
+    //General commands
     switch (interaction.commandName.toLowerCase()) {
         case "tally":
             var user;
@@ -385,7 +425,7 @@ client.on('interactionCreate', async interaction => {
                                             files: ["https://c.tenor.com/Y8IgWKGfKwoAAAAC/welcome-to-the-family-son-resident-evil7.gif"]
                                         })));
 
-                                        utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, parseInt(interaction.options.get("reward").value), resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1], function() {
+                                        utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, parseInt(interaction.options.get("reward").value), resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1, 1], function() {
                                             utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
                                                 interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
                                                 interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! Order ID: " + orderID + " " + goodBoyCoin + "\n\nRules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
@@ -401,7 +441,7 @@ client.on('interactionCreate', async interaction => {
                                                 return interaction.reply("You can only buy 1 ticket per raffle.");
                                             }
 
-                                            utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, parseInt(interaction.options.get("reward").value), resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1], function() {
+                                            utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, parseInt(interaction.options.get("reward").value), resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1, 1], function() {
                                                 utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
                                                     interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
                                                     interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! Order ID: " + orderID + " " + goodBoyCoin + "\n\nRules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
@@ -411,7 +451,7 @@ client.on('interactionCreate', async interaction => {
                                             });
                                         });
                                     } else {
-                                        utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1], function() {
+                                        utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1, 0], function() {
                                             utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
                                                 interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
                                                 interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! Order ID: " + orderID + " " + goodBoyCoin + "\n\nRules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
@@ -463,7 +503,7 @@ client.on('interactionCreate', async interaction => {
                 .setTitle("Brent command list")
                 .setDescription("<required>, [optional]")
                 .setColor("#00ADEF");
-            for (var i = 4; i < commands.length; i++) {
+            for (var i = 5; i < commands.length; i++) {
                 var name = "/" + commands[i].name;
                 if (commands[i].options != undefined) {
                     var required1;
