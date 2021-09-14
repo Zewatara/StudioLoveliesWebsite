@@ -376,7 +376,9 @@ client.on('interactionCreate', async interaction => {
 
                                     if (parseInt(interaction.options.get("reward").value) === 6) {
                                         client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => console.log(role.id === "852675470319026177"))));
-                                        if (client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "852675470319026177")))) return interaction.reply("You already are part of the Children of Epik.");
+                                        if (client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.forEach(role => {
+                                                if (role.id === "852675470319026177") return interaction.reply("You already are part of the Children of Epik.");
+                                            }))));
                                         else {
                                             client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.add("852675470319026177")));
                                             client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("852675207290552321").then(channel => channel.send({
