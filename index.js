@@ -318,10 +318,17 @@ client.on('interactionCreate', async interaction => {
                 utils.selectFromDB(connection, function(success, resp) {
                     if (success) {
                         var rand = Math.floor(Math.random() * resp.length);
-                        interaction.reply("<@" + resp[rand].userID + "> has won the raffle! 🎫");
-                        utils.rawQuery(connection, "DELETE FROM raffle;", function() {
-                            utils.rawQuery(connection, "UPDATE orders SET refundable=0 WHERE rewardID=7 AND refundable=1;");
-                        });
+                        utils.selectFromDB(connection, function(success2, resp2) {
+                            if (success2) {
+                                utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) + resp.length), ["userID", resp[rand].userID], function() {
+                                    interaction.reply("<@" + resp[rand].userID + "> has won the raffle! 🎫\nAdded " + resp.length + " Good Boy coins to your tally " + goodBoyCoin);
+
+                                    utils.rawQuery(connection, "DELETE FROM raffle;", function() {
+                                        utils.rawQuery(connection, "UPDATE orders SET refundable=0 WHERE rewardID=7 AND refundable=1;");
+                                    });
+                                });
+                            }
+                        }, "users", "uesrID", resp[rand].userID);
                     } else {
                         interaction.reply("Raffle is empty!");
                     }
