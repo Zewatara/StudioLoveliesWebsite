@@ -526,7 +526,7 @@ client.on('interactionCreate', async interaction => {
             break;
         case "give":
             if (parseInt(interaction.options.get("amount").value) < 0) return interaction.reply("Good Boy coins must be earned, not stolen.");
-            if (parseInt(interaction.options.get("amount").value) === 0) return interaction.reply("Do not waste my time, this is a serious job.");
+            if (parseInt(interaction.options.get("amount").value) === 0 || isNaN(interaction.options.get("amount").value)) return interaction.reply("Do not waste my time, this is a serious job.");
             if (interaction.user.id === interaction.options.get("username").user.id) return interaction.reply("Usually \"give\" means **giving** to someone else... not yourself.");
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
