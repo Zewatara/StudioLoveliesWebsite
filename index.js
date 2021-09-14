@@ -317,19 +317,23 @@ client.on('interactionCreate', async interaction => {
             case "refund":
                 utils.selectFromDB(connection, function(success, resp) {
                     if (success) {
-                        if (resp.refundable) {
+                        if (parseInt(resp[0].refundable) === 1) {
                             utils.updateRow(connection, "orders", "refundable", 0, ["orderID", interaction.options.get("orderid").value], function() {
                                 utils.selectFromDB(connection, function(success, resp2) {
                                     if (success) {
-                                        utils.updateRow(connection, "users", "coins", (parseInt(resp2.coins) + parseInt(resp.cost)), ["userID", resp.userID], function() {
-                                            if (resp.)
-                                                interaction.reply("Order #" + interaction.options.get("orderid").value + " has been refunded.");
-                                            client.users.fetch(resp.userID).then(user => user.send("Order # " + interaction.options.get("orderid").value + ": refund confirmation\nYou have been refunded " + resp.cost + " Good Boy coins."));
+                                        utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) + parseInt(resp[0].cost)), ["userID", resp[0].userID], function() {
+                                            if (parseInt(resp[0].rewardID) === 6) {
+                                                client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.remove("852675470319026177")));
+                                            } else if (parseInt(resp[0].rewardID) === 7) {
+                                                utils.rawQuery("DELETE FROM raffle WHERE userID=" + resp[0].userID, function() {});
+                                            }
+                                            interaction.reply("Order #" + interaction.options.get("orderid").value + " has been refunded.");
+                                            client.users.fetch(resp[0].userID).then(user => user.send("Order # " + interaction.options.get("orderid").value + ": refund confirmation\nYou have been refunded " + resp[0].cost + " Good Boy coins."));
                                         });
                                     } else {
                                         interaction.reply("Something went wrong, couldn't refund this order.\nPlease contact cunt#4811");
                                     }
-                                }, "users", "userID", resp.userID);
+                                }, "users", "userID", resp[0].userID);
                             });
                         } else {
                             interaction.reply("This order cannot be refunded!");
