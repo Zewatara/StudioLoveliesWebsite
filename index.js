@@ -405,7 +405,7 @@ client.on('interactionCreate', async interaction => {
             break;
         case "buy":
             if (interaction.options.get("reward") != undefined) {
-                if (parseInt(interaction.options.get("reward").value) < commands.length || parseInt(interaction.options.get("reward").value) > commands.length) return interaction.reply("This reward doesn't exist. But if you have any suggestions, feel free to tell Epik#2112!");
+                if (parseInt(interaction.options.get("reward").value) < 0 || parseInt(interaction.options.get("reward").value) > commands.length) return interaction.reply("This reward doesn't exist. But if you have any suggestions, feel free to tell Epik#2112!");
                 utils.selectFromDB(connection, function(success, resp) {
                     if (success) {
                         resp.sort(function(a, b) { return b.cost - a.cost; });
