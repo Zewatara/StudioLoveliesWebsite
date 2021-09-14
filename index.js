@@ -365,7 +365,7 @@ client.on('interactionCreate', async interaction => {
     var rewards = await client.guilds.fetch("274342839041916928").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "885711758759723068")));;
 
     if (rewards) {
-        switch (interaciton.commandName.toLowerCase()) {
+        switch (interaction.commandName.toLowerCase()) {
             case "complete":
                 utils.selectFromDB(connection, function(success, resp) {
                     if (success) {
