@@ -318,7 +318,7 @@ client.on('interactionCreate', async interaction => {
                 utils.selectFromDB(connection, function(success, resp) {
                     if (success) {
                         if (parseInt(resp[0].refundable) === 1) {
-                            utils.updateRow(connection, "orders", "refundable", 0, ["orderID", interaction.options.get("orderid").value], function() {
+                            utils.updateRow(connection, "orders", "refundable", "0", ["orderID", resp[0].orderID], function() {
                                 utils.selectFromDB(connection, function(success, resp2) {
                                     if (success) {
                                         utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) + parseInt(resp[0].cost)), ["userID", resp[0].userID], function() {
