@@ -337,7 +337,7 @@ client.on('interactionCreate', async interaction => {
                 utils.selectFromDB(connection, function(success, resp) {
                     if (success) {
                         resp.sort(function(a, b) { return b.cost - a.cost; });
-                        utils.selectFromDB(connection, function(success2, resp2) {
+                        utils.selectFromDB(connection, async function(success2, resp2) {
                             if (success2) {
                                 var exist = false;
 
@@ -345,7 +345,7 @@ client.on('interactionCreate', async interaction => {
                                     if (parseInt(interaction.options.get("reward").value) === 6) {
                                         if (client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "852675470319026177")))) return interaction.reply("You already are a Children of Epik.");
                                     } else if (parseInt(interaction.options.get("reward").value) === 7) {
-                                        utils.existsInTable(connection, "raffle", "userID", interaction.user.id, function(exists) {
+                                        await utils.existsInTable(connection, "raffle", "userID", interaction.user.id, function(exists) {
                                             if (!exists) {
                                                 utils.insertToDB(connection, "raffle", "", [interaction.user.id, interaction.user.tag], function() {});
                                             } else {
