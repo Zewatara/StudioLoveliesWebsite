@@ -376,27 +376,26 @@ client.on('interactionCreate', async interaction => {
 
                                     if (parseInt(interaction.options.get("reward").value) === 6) {
                                         client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.forEach(role => {
-                                            if (role.id === "852675470319026177") console.log("You already are part of the Children of Epik.");
+                                            if (role.id === "852675470319026177") {
+                                                console.log("You already are part of the Children of Epik.");
+                                                return interaction.reply("You already are part of the Children of Epik.");
+                                            }
                                         })));
-                                        if (client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.forEach(role => {
-                                                if (role.id === "852675470319026177") return interaction.reply("You already are part of the Children of Epik.");
-                                            }))));
-                                        else {
-                                            client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.add("852675470319026177")));
-                                            client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("852675207290552321").then(channel => channel.send({
-                                                content: "<@" + interaction.user.id + ">",
-                                                files: ["https://c.tenor.com/Y8IgWKGfKwoAAAAC/welcome-to-the-family-son-resident-evil7.gif"]
-                                            })));
 
-                                            utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, parseInt(interaction.options.get("reward").value), resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1], function() {
-                                                utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
-                                                    interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
-                                                    interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! Order ID: " + orderID + " " + goodBoyCoin + "\n\nRules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
+                                        client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.add("852675470319026177")));
+                                        client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("852675207290552321").then(channel => channel.send({
+                                            content: "<@" + interaction.user.id + ">",
+                                            files: ["https://c.tenor.com/Y8IgWKGfKwoAAAAC/welcome-to-the-family-son-resident-evil7.gif"]
+                                        })));
 
-                                                    client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send(interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\", Order ID: " + orderID)));
-                                                });
+                                        utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, parseInt(interaction.options.get("reward").value), resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1], function() {
+                                            utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
+                                                interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
+                                                interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! Order ID: " + orderID + " " + goodBoyCoin + "\n\nRules:\n1. All orders will be fulfilled when possible. Our member's lives take priority. We will try to get the orders done as soon as possible.\n2. After redeeming an item, please wait for the relevant Studio Lovelies member to contact you. If nobody contacts you within a day, contact Epik.\n3. When redeeming the \"Short Story\" reward, the writers may not feel comfortable writing some or all of your request. If that occurs, and a compromise cannot be reached, contact Epik for a refund.\n4. After redeeming the \"Short Story\" reward, a random writer from the following list will be assigned to your order: Kythebumblebee (aka MILF of Viagra Falls), SoupBoi and KodaNootNoot. If you wish a specific writer to fulfill your order, please contact them.");
+
+                                                client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send(interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\", Order ID: " + orderID)));
                                             });
-                                        }
+                                        });
                                     } else if (parseInt(interaction.options.get("reward").value) === 7) {
                                         utils.existsInTable(connection, "raffle", "userID", interaction.user.id, function(exists) {
                                             if (!exists) {
