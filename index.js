@@ -369,30 +369,32 @@ client.on('interactionCreate', async interaction => {
     }
 
     //Studio Lovelies rewards only
-    var rewards = await client.guilds.fetch("274342839041916928").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "885711758759723068")));;
+    if (interaction.guild.id === "274342839041916928") {
+        var rewards = await client.guilds.fetch("274342839041916928").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "885711758759723068")));;
 
-    if (rewards) {
-        switch (interaction.commandName.toLowerCase()) {
-            case "complete":
-                utils.selectFromDB(connection, function(success, resp) {
-                    if (success) {
-                        if (resp[0].completed != "1") {
-                            utils.updateRow(connection, "orders", "completed", "1", ["orderID", resp[0].orderID], function() {
-                                utils.updateRow(connection, "orders", "refundable", "0", ["orderID", resp[0].orderID], function() {
-                                    interaction.reply("Order #" + resp[0].orderID + " completed by <@" + interaction.user.id + ">.");
-                                    client.users.fetch(resp[0].userID).then(user => user.send(interaction.user.tag + " has completed your order!\n\nOrder #" + resp[0].orderID + ", " + resp[0].reward + "."));
+        if (rewards) {
+            switch (interaction.commandName.toLowerCase()) {
+                case "complete":
+                    utils.selectFromDB(connection, function(success, resp) {
+                        if (success) {
+                            if (resp[0].completed != "1") {
+                                utils.updateRow(connection, "orders", "completed", "1", ["orderID", resp[0].orderID], function() {
+                                    utils.updateRow(connection, "orders", "refundable", "0", ["orderID", resp[0].orderID], function() {
+                                        interaction.reply("Order #" + resp[0].orderID + " completed by <@" + interaction.user.id + ">.");
+                                        client.users.fetch(resp[0].userID).then(user => user.send(interaction.user.tag + " has completed your order!\n\nOrder #" + resp[0].orderID + ", " + resp[0].reward + "."));
+                                    });
                                 });
-                            });
+                            } else {
+                                interaction.reply("This order cannot be or was already completed.");
+                            }
                         } else {
-                            interaction.reply("This order cannot be or was already completed.");
+                            interaction.reply("Couldn't find Order #" + interaction.options.get("orderid").value);
                         }
-                    } else {
-                        interaction.reply("Couldn't find Order #" + interaction.options.get("orderid").value);
-                    }
-                }, "orders", "orderID", interaction.options.get("orderid").value);
-                break;
-            default:
-                break;
+                    }, "orders", "orderID", interaction.options.get("orderid").value);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
