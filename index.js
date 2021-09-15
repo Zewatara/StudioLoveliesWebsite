@@ -328,7 +328,7 @@ client.on('interactionCreate', async interaction => {
                                     });
                                 });
                             }
-                        }, "users", "uesrID", resp[rand].userID);
+                        }, "users", "userID", resp[rand].userID);
                     } else {
                         interaction.reply("Raffle is empty!");
                     }
