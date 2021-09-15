@@ -498,7 +498,13 @@ client.on('interactionCreate', async interaction => {
                             embed.addField((parseInt(i) + 1) + ". " + resp[i].reward, resp[i].cost + coinCoins);
                         }
                         embed.setDescription("Choose your reward using the number attributed to it!")
-                            .setFooter("Made by cunt#4811", cuntAvatar);
+                        utils.selectFromDB(connection, function(success2, resp2) {
+                            if (success2) {
+                                embed.setFooter("Your tally: " + resp2[0].coins + " " + goodBoyCoin + " | Made by cunt#4811", interaction.user.avatarURL);
+                            } else {
+                                embed.setFooter("Made by cunt#4811", cuntAvatar);
+                            }
+                        }, "users", "userID", interaction.user.id);
                         interaction.reply({ embeds: [embed] });
                     } else {
                         return interaction.channel.send("Something went wrong, please try again later");
