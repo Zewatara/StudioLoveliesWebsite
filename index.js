@@ -501,11 +501,12 @@ client.on('interactionCreate', async interaction => {
                         utils.selectFromDB(connection, function(success2, resp2) {
                             if (success2) {
                                 embed.setFooter("Your tally: " + resp2[0].coins + " " + goodBoyCoin + " | Made by cunt#4811", interaction.user.avatarURL);
+                                interaction.reply({ embeds: [embed] });
                             } else {
                                 embed.setFooter("Made by cunt#4811", cuntAvatar);
+                                interaction.reply({ embeds: [embed] });
                             }
                         }, "users", "userID", interaction.user.id);
-                        interaction.reply({ embeds: [embed] });
                     } else {
                         return interaction.channel.send("Something went wrong, please try again later");
                     }
