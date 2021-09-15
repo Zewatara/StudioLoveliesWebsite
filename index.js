@@ -500,7 +500,7 @@ client.on('interactionCreate', async interaction => {
                         embed.setDescription("Choose your reward using the number attributed to it!")
                         utils.selectFromDB(connection, function(success2, resp2) {
                             if (success2) {
-                                embed.setFooter("Your tally: " + resp2[0].coins + " " + goodBoyCoin + " | Made by cunt#4811", interaction.user.avatarURL);
+                                embed.setFooter("Your tally: " + resp2[0].coins + " | Made by cunt#4811", interaction.user.avatarURL());
                                 interaction.reply({ embeds: [embed] });
                             } else {
                                 embed.setFooter("Made by cunt#4811", cuntAvatar);
