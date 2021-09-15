@@ -324,7 +324,7 @@ client.on('interactionCreate', async interaction => {
                                     interaction.reply("<@" + resp[rand].userID + "> has won the raffle! 🎫\nAdded " + resp.length + " Good Boy coins to your tally " + goodBoyCoin);
 
                                     utils.rawQuery(connection, "DELETE FROM raffle;", function() {
-                                        utils.rawQuery(connection, "UPDATE orders SET refundable=0 WHERE rewardID=7 AND refundable=1;");
+                                        utils.rawQuery(connection, "UPDATE orders SET refundable=0 WHERE rewardID=7 AND refundable=1;", function() {});
                                     });
                                 });
                             }
