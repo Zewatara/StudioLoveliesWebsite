@@ -170,6 +170,14 @@ const commands = [{
     {
         name: "help",
         description: "Display available commands"
+    },
+    {
+        name: "website",
+        description: "Send the link to the Studio Lovelies website"
+    },
+    {
+        name: "gavel",
+        description: "Send a gavel GIF"
     }
 ];
 
@@ -568,6 +576,12 @@ client.on('interactionCreate', async interaction => {
                     interaction.reply("You don't have any Good Boy coins!");
                 }
             }, "users", "userID", interaction.user.id);
+            break;
+        case "website":
+            interaction.reply("https://studiolovelies.com");
+            break;
+        case "gavel":
+            interaction.reply({ files: ["https://tenor.com/view/gavel-order-in-court-court-is-settled-phoenix-wright-ace-attorney-gif-16543922.gif"] });
             break;
         default:
             break;
