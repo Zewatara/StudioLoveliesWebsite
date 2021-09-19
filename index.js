@@ -280,7 +280,7 @@ client.on("ready", () => {
 
     //Ping to keep awake
     setInterval(() => {
-        http.get("https://studio-lovelies.herokuapp.com");
+        http.get("http://studio-lovelies.herokuapp.com");
     }, 30 * 60 * 1000);
 
     //GBD Miners
