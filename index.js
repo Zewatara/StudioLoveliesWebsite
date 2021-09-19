@@ -182,7 +182,7 @@ const commands = [{
     }
 ];
 
-const mutedCommands = [1, 6, 7];
+const mutedCommands = [4, 6, 7];
 
 const rest = new REST({ version: '9' }).setToken(TOKEN);
 
@@ -460,7 +460,7 @@ client.on('interactionCreate', async interaction => {
                                 if (parseInt(resp2[0].coins) >= parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)) {
                                     var orderID = utils.generateId(8);
 
-                                    if (parseInt(interaction.options.get("reward").value) === 1) {
+                                    if (parseInt(interaction.options.get("reward").value) === 4) {
                                         utils.selectFromDB(connection, function(success, resp) {
                                             if (success) {
                                                 if (resp[i].miners >= 5) return interaction.reply("You have already bought the maximum amount of miners (5)");
