@@ -465,7 +465,7 @@ client.on('interactionCreate', async interaction => {
                                     if (parseInt(interaction.options.get("reward").value) === 4) {
                                         utils.selectFromDB(connection, function(success, resp) {
                                             if (success) {
-                                                if (resp[i].miners >= 5) return interaction.reply("You have already bought the maximum amount of miners (5)");
+                                                if (parseInt(resp[0].miners) >= 5) return interaction.reply("You have already bought the maximum amount of miners (5)");
                                                 utils.updateRow(connection, "users", "miners", (parseInt(resp[0].miners) + 1), ["userID", interaction.user.id], function() {
                                                     utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, parseInt(interaction.options.get("reward").value), resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1, 1], function() {
                                                         utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
