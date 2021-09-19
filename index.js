@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const mysql = require("mysql");
+const http = require("http");
 const utils = require("./GoodBoyCoinTally/utils");
 if (process.env.CLEARDB_DATABASE_URL === undefined) {
     const config = require("./GoodBoyCoinTally/config.json");
@@ -276,6 +277,10 @@ app.get("*", (req, res) => {
 
 client.on("ready", () => {
     console.info("Ready");
+    
+    setInterval(() => {
+        http.get("https://studio-lovelies.herokuapp.com");
+    }, 30 * 60 * 1000);
 });
 
 client.on("error", error => {
