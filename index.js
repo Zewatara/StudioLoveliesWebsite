@@ -182,7 +182,7 @@ const commands = [{
     }
 ];
 
-const mutedCommands = [6, 7];
+const mutedCommands = [1, 6, 7];
 
 const rest = new REST({ version: '9' }).setToken(TOKEN);
 
@@ -277,10 +277,32 @@ app.get("*", (req, res) => {
 
 client.on("ready", () => {
     console.info("Ready");
-    
+
+    //Ping to keep awake
     setInterval(() => {
         http.get("https://studio-lovelies.herokuapp.com");
     }, 30 * 60 * 1000);
+
+    //GBD Miners
+    setInterval(() => {
+        utils.selectFromDB(connection, function(success, resp) {
+            if (success) {
+                for (i in resp) {
+                    if (parseInt(resp[i].miners) > 0) {
+                        utils.updateRow(connection, "users", "minerAmount", (parseFloat(resp[i].minerAmount) + 0.01 * parseInt(resp[i].miners)), ["userID", resp[i].userID], function() {
+                            if (Math.round(parseFloat(resp[i].minerAmount) + 0.01 * parseInt(resp[i].miners)) > 0) {
+                                utils.updateRow(connection, "users", "minerAmount", (parseFloat(resp[i].minerAmount) - Math.round(parseFloat(resp[i].minerAmount) + 0.01 * parseInt(resp[i].miners))), ["userID", resp[i].userID], function() {
+                                    utils.updateRow(connection, "users", "coins", (parseInt(resp[i].coins) + Math.round(parseFloat(resp[i].minerAmount) + 0.01 * parseInt(resp[i].miners))), ["userID", resp[i].userID], function() {
+                                        //Done
+                                    });
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+        }, "users");
+    }, 10000); //60 * 60 * 1000);
 });
 
 client.on("error", error => {
@@ -438,7 +460,25 @@ client.on('interactionCreate', async interaction => {
                                 if (parseInt(resp2[0].coins) >= parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)) {
                                     var orderID = utils.generateId(8);
 
-                                    if (parseInt(interaction.options.get("reward").value) === 6) {
+                                    if (parseInt(interaction.options.get("reward").value) === 1) {
+                                        utils.selectFromDB(connection, function(success, resp) {
+                                            if (success) {
+                                                if (resp[i].miners >= 5) return interaction.reply("You have already bought the maximum amount of miners (5)");
+                                                utils.updateRow(connection, "users", "miners", (parseInt(resp[0].miners) + 1), ["userID", interaction.user.id], function() {
+                                                    utils.insertToDB(connection, "orders", "", [interaction.user.id, interaction.user.tag, resp[parseInt(interaction.options.get("reward").value) - 1].reward, parseInt(interaction.options.get("reward").value), resp[parseInt(interaction.options.get("reward").value) - 1].cost, orderID, 1, 1], function() {
+                                                        utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) - parseInt(resp[parseInt(interaction.options.get("reward").value) - 1].cost)), ["userID", interaction.user.id], function() {
+                                                            interaction.reply("Purchased: " + resp[parseInt(interaction.options.get("reward").value) - 1].reward);
+                                                            interaction.user.send("You have bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\" for " + resp[parseInt(interaction.options.get("reward").value) - 1].cost + " Good Boy coins! Order ID: " + orderID + " " + goodBoyCoin);
+
+                                                            client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send(interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\", Order ID: " + orderID)));
+                                                        });
+                                                    });
+                                                });
+                                            } else {
+                                                return interaction.reply("Something went wrong, please try again later");
+                                            }
+                                        }, "users", "userID", interaction.user.id);
+                                    } else if (parseInt(interaction.options.get("reward").value) === 6) {
                                         var hasRole = await client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "852675470319026177")));
 
                                         if (hasRole) return interaction.reply("You already are part of the Children of Epik.");
