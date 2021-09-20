@@ -445,6 +445,7 @@ client.on('interactionCreate', async interaction => {
                 if (success) {
                     interaction.reply("<@" + user + "> has " + resp[0].coins + " Good Boy coins " + goodBoyCoin);
                 } else {
+                    console.log(resp);
                     interaction.reply("Couldn't find user <@" + user + "> in the tally!");
                 }
             }, "users", "userID", user);
