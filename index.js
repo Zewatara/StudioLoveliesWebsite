@@ -66,6 +66,7 @@ console.log(dbOptions);
 
 try {
     var connection = mysql.createPool(dbOptions);
+    console.log(connection);
 }catch (e) {
     console.log(e);
 }
