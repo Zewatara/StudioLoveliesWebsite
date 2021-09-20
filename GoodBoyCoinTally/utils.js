@@ -5,6 +5,7 @@ module.exports = {
         try {
             connection.query("SELECT * FROM " + table + query, function(err, resp, fields) {
                 if (err || resp[0] === undefined) {
+                    console.log(err);
                     callback(false, "This value doesn't exist");
                     return;
                 }
