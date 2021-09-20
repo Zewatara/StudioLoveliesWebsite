@@ -5,7 +5,7 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const mysql = require("mysql");
 const http = require("http");
-const utils = require("./GoodBoyCoinTally/utils");
+const utils = require("./GoodBoyCoinTally/utils.js");
 if (process.env.CLEARDB_DATABASE_URL === undefined) {
     const config = require("./GoodBoyCoinTally/config.json");
 }
