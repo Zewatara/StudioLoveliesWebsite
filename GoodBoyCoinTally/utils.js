@@ -12,6 +12,7 @@ module.exports = {
             });
         } catch (err) {
             callback(false, err);
+            console.log(err);
             return;
         }
     },
