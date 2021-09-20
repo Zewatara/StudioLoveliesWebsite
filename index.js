@@ -64,7 +64,11 @@ if (process.env.CLEARDB_DATABASE_URL != undefined) {
 
 console.log(dbOptions);
 
-var connection = mysql.createPool(dbOptions);
+try {
+    var connection = mysql.createPool(dbOptions);
+}catch (e) {
+    console.log(e);
+}
 
 const TOKEN = process.env.BOT_TOKEN || config.token;
 const goodBoyCoin = "<:goodboycoin:625181771335729173>";
