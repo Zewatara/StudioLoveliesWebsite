@@ -182,7 +182,7 @@ const commands = [{
     }
 ];
 
-const mutedCommands = [4, 6, 7];
+const mutedCommands = [4, 7, 8];
 
 const rest = new REST({ version: '9' }).setToken(TOKEN);
 
@@ -480,7 +480,7 @@ client.on('interactionCreate', async interaction => {
                                                 return interaction.reply("Something went wrong, please try again later");
                                             }
                                         }, "users", "userID", interaction.user.id);
-                                    } else if (parseInt(interaction.options.get("reward").value) === 6) {
+                                    } else if (parseInt(interaction.options.get("reward").value) === 7) {
                                         var hasRole = await client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.cache.some(role => role.id === "852675470319026177")));
 
                                         if (hasRole) return interaction.reply("You already are part of the Children of Epik.");
@@ -499,7 +499,7 @@ client.on('interactionCreate', async interaction => {
                                                 client.guilds.fetch("274342839041916928").then(guild => guild.channels.fetch("886682255920074793").then(channel => channel.send(interaction.user.tag + " has bought \"" + resp[parseInt(interaction.options.get("reward").value) - 1].reward + "\", Order ID: " + orderID)));
                                             });
                                         });
-                                    } else if (parseInt(interaction.options.get("reward").value) === 7) {
+                                    } else if (parseInt(interaction.options.get("reward").value) === 8) {
                                         utils.existsInTable(connection, "raffle", "userID", interaction.user.id, function(exists) {
                                             if (!exists) {
                                                 utils.insertToDB(connection, "raffle", "", [interaction.user.id, interaction.user.tag], function() {});
