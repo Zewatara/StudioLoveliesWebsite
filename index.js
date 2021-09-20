@@ -379,9 +379,9 @@ client.on('interactionCreate', async interaction => {
                                         utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) + parseInt(resp[0].cost)), ["userID", resp[0].userID], function() {
                                             if (parseInt(resp[0].rewardID) === 4) {
                                                 utils.rawQuery(connection, "UPDATE users SET mienrs=0 WHERE userID=" + resp[0].userID + ";", function() {});
-                                            } else if (parseInt(resp[0].rewardID) === 6) {
-                                                client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.remove("852675470319026177")));
                                             } else if (parseInt(resp[0].rewardID) === 7) {
+                                                client.guilds.fetch("842146071626514462").then(guild => guild.members.fetch(interaction.user.id).then(member => member.roles.remove("852675470319026177")));
+                                            } else if (parseInt(resp[0].rewardID) === 8) {
                                                 utils.rawQuery(connection, "DELETE FROM raffle WHERE userID=" + resp[0].userID + ";", function() {});
                                             }
                                             interaction.reply("Order #" + interaction.options.get("orderid").value + " has been refunded.");
