@@ -62,6 +62,8 @@ if (process.env.CLEARDB_DATABASE_URL != undefined) {
     };
 }
 
+console.log(dbOptions);
+
 var connection = mysql.createPool(dbOptions);
 
 const TOKEN = process.env.BOT_TOKEN || config.token;
