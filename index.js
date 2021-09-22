@@ -435,8 +435,8 @@ client.on('interactionCreate', async interaction => {
                                     .setTitle("Orders left to complete")
                                     .setColor("#00ADEF")
                                     .setFooter("Made by cunt#4811", cuntAvatar);
-                                    for (i in resp.data) {
-                                        embed.addField(resp.data[i].reward, "Order #" + resp.data[i].orderID + " by " + resp.data[i].username);
+                                    for (i in resp) {
+                                        embed.addField(resp[i].reward, "Order #" + resp[i].orderID + " by " + resp[i].username);
                                     }
                                 interaction.reply({ embeds: [embed] });
                             }else {
