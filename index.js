@@ -411,15 +411,7 @@ client.on('interactionCreate', async interaction => {
         if (rewards) {
             switch (interaction.commandName.toLowerCase()) {
                 case "complete":
-                    if (interaction.options.get("orderid") === undefined) {
-                        utils.selectFromDB(connection, function(success, resp) {
-                            if (success) {
-                                console.log(resp)
-                            }else {
-                                console.log(resp);
-                            }
-                        }, "orders", "completed", "0");
-                    }else {
+                    if (interaction.options.get("orderid") != undefined) {
                         utils.selectFromDB(connection, function(success, resp) {
                             if (success) {
                                 if (resp[0].completed != "1") {
@@ -436,6 +428,14 @@ client.on('interactionCreate', async interaction => {
                                 interaction.reply("Couldn't find Order #" + interaction.options.get("orderid").value);
                             }
                         }, "orders", "orderID", interaction.options.get("orderid").value);
+                    }else {
+                        utils.selectFromDB(connection, function(success, resp) {
+                            if (success) {
+                                console.log(resp)
+                            }else {
+                                console.log(resp);
+                            }
+                        }, "orders", "completed", "0");
                     }
                     break;
                 default:
