@@ -429,7 +429,7 @@ client.on('interactionCreate', async interaction => {
                             }
                         }, "orders", "orderID", interaction.options.get("orderid").value);
                     }else {
-                        utils.selectFromDB(connection, function(success, resp) {
+                        utils.rawQuery(connection, "SELECT * FROM orders WHERE completed=0 AND refundable=1", function(success, resp) {
                             if (success) {
                                 var embed = new Discord.MessageEmbed()
                                     .setTitle("Orders left to complete")
@@ -442,7 +442,7 @@ client.on('interactionCreate', async interaction => {
                             }else {
                                 interaction.reply("Something went wrong, please try again later");
                             }
-                        }, "orders", "completed", "0");
+                        });
                     }
                     break;
                 default:
