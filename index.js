@@ -431,9 +431,16 @@ client.on('interactionCreate', async interaction => {
                     }else {
                         utils.selectFromDB(connection, function(success, resp) {
                             if (success) {
-                                console.log(resp)
+                                var embed = new Discord.MessageEmbed()
+                                    .setTitle("Orders left to complete")
+                                    .setColor("#00ADEF")
+                                    .setFooter("Made by cunt#4811", cuntAvatar);
+                                    for (i in resp.data) {
+                                        embed.addField(resp.data[i].reward, "Order #" + resp.data[i].orderID + " by " + resp.data[i].username);
+                                    }
+                                interaction.reply({ embeds: [embed] });
                             }else {
-                                console.log(resp);
+                                interaction.reply("Something went wrong, please try again later");
                             }
                         }, "orders", "completed", "0");
                     }
@@ -556,7 +563,7 @@ client.on('interactionCreate', async interaction => {
                         resp.sort(function(a, b) { return b.cost - a.cost; });
                         embed.setTitle("Good Boy coin shop " + goodBoyCoin)
                             .setThumbnail("https://i.imgur.com/FgDhpVA.png")
-                            .setColor('#00ADEF');
+                            .setColor("#00ADEF");
                         for (i in resp) {
                             coinCoins = " coin";
                             if (resp[i].cost != 1) coinCoins = " coins";
