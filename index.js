@@ -270,9 +270,9 @@ app.post("/contact", (req, res) => {
     }
 });
 
-/*app.get("*", (req, res) => {
+app.get("*", (req, res) => {
     return res.status(404).sendFile("404.html", { root: "public/views" });
-});*/
+});
 
 client.on("ready", () => {
     console.info("Ready");
