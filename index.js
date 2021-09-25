@@ -302,7 +302,7 @@ client.on("ready", () => {
                 }
             }
         }, "users");
-    }, 60 * 60 * 1000);
+    }, /*60 * 60 * 1000*/ 5000);
 });
 
 client.on("error", error => {
@@ -429,18 +429,18 @@ client.on('interactionCreate', async interaction => {
                                 interaction.reply("Couldn't find Order #" + interaction.options.get("orderid").value);
                             }
                         }, "orders", "orderID", interaction.options.get("orderid").value);
-                    }else {
+                    } else {
                         utils.rawQuery(connection, "SELECT * FROM orders WHERE completed=0 AND refundable=1", function(success, resp) {
                             if (success) {
                                 var embed = new Discord.MessageEmbed()
                                     .setTitle("Orders left to complete")
                                     .setColor("#00ADEF")
                                     .setFooter("Made by cunt#4811", cuntAvatar);
-                                    for (i in resp) {
-                                        embed.addField(resp[i].reward, "Order #" + resp[i].orderID + " by " + resp[i].username);
-                                    }
+                                for (i in resp) {
+                                    embed.addField(resp[i].reward, "Order #" + resp[i].orderID + " by " + resp[i].username);
+                                }
                                 interaction.reply({ embeds: [embed] });
-                            }else {
+                            } else {
                                 interaction.reply("Something went wrong, please try again later");
                             }
                         });
