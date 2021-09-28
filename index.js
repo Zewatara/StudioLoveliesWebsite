@@ -319,7 +319,7 @@ client.on("ready", () => {
         var utcDate = new Date(date.toUTCString());
         utcDate.setHours(utcDate.getHours() - 8);
         var currentDate = new Date(utcDate);
-        if ([1, 4].includes(currentDate.getDay()) /*&& currentDate.getHours() === 16*/ ) {
+        if ([1, 4].includes(currentDate.getDay()) && currentDate.getHours() === 16) {
             utils.selectFromDB(connection, function(success, resp) {
                 client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("887485231521738762").then(channel => {
                     if (success) {
@@ -336,12 +336,12 @@ client.on("ready", () => {
                             }
                         }, "users", "userID", resp[rand].userID);
                     } else {
-                        channel.send("Raffle is empty!");
+                        channel.send("Raffle is empty!\nPurchase a ticket for the next raffle using `/buy 8`!");
                     }
                 }));
             }, "raffle");
         }
-    }, /*60 * 60 * */ 10000);
+    }, 60 * 60 * 1000);
 });
 
 client.on("error", error => {
@@ -404,7 +404,7 @@ client.on('interactionCreate', async interaction => {
                             }
                         }, "users", "userID", resp[rand].userID);
                     } else {
-                        interaction.reply("Raffle is empty!");
+                        interaction.reply("Raffle is empty!\nPurchase a ticket for the next raffle using `/buy 8`!");
                     }
                 }, "raffle");
                 break;
