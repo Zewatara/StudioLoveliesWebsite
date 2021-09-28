@@ -477,6 +477,7 @@ client.on('interactionCreate', async interaction => {
                         .setTitle("Good Boy coins mined " + goodBoyCoin)
                         .setColor("#00ADEF")
                         .addField("Current mined amount:", resp[0].minerAmount.toString())
+                        .addField("Miners:", resp[0].miners.toString() + " (0.01 GBC/h each)")
                         .addField("Total GBC mined:", resp[0].totalMined.toString())
                         .setFooter("Made by cunt#4811", interaction.user.avatarURL());
                     interaction.reply({ embeds: [embed] });
