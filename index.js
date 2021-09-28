@@ -319,8 +319,8 @@ client.on("ready", () => {
         var utcDate = new Date(date.toUTCString());
         utcDate.setHours(utcDate.getHours() - 8);
         var currentDate = new Date(utcDate);
-        console.log(currentDate.getDay(), [1, 4].includes(currentDate.getDay()), currentDate.getHours(), currentDate.getHours() === 4);
-        if ([1, 4].includes(currentDate.getDay()) && currentDate.getHours() === 4) {
+        console.log(currentDate.getDay(), [1, 4].includes(currentDate.getDay()), currentDate.getHours(), currentDate.getHours() === 16);
+        if ([1, 4].includes(currentDate.getDay()) /*&& currentDate.getHours() === 16*/ ) {
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
                     client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("887485231521738762").then(channel => {
