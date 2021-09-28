@@ -136,7 +136,12 @@ const commands = [{
 
     {
         name: "miners",
-        description: "Show how many Good Boy coins you've mined"
+        description: "Show how many Good Boy coins you've mined",
+        options: [{
+            name: "username",
+            description: "The username of the user you want to get the amount of miners from",
+            type: 6
+        }]
     },
 
     {
@@ -471,20 +476,23 @@ client.on('interactionCreate', async interaction => {
             }, "users", "userID", user);
             break;
         case "miners":
+            var user;
+            if (interaction.options.get("username") != undefined) user = interaction.options.get("username").user.id;
+            else user = interaction.user.id;
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
                     var embed = new Discord.MessageEmbed()
                         .setTitle("Good Boy coins mined " + goodBoyCoin)
                         .setColor("#00ADEF")
+                        .addField("Miners (0.01 GBC/h each):", resp[0].miners.toString())
                         .addField("Current mined amount:", resp[0].minerAmount.toString())
-                        .addField("Miners:", resp[0].miners.toString() + " (0.01 GBC/h each)")
                         .addField("Total GBC mined:", resp[0].totalMined.toString())
-                        .setFooter("Made by cunt#4811", interaction.user.avatarURL());
+                        .setFooter("Made by cunt#4811", user.avatarURL());
                     interaction.reply({ embeds: [embed] });
                 } else {
-                    interaction.reply("Couldn't find user <@" + interaction.user.id + "> in the tally!");
+                    interaction.reply("Couldn't find user <@" + user + "> in the tally!");
                 }
-            }, "users", "userID", interaction.user.id);
+            }, "users", "userID", user);
             break;
         case "buy":
             if (interaction.options.get("reward") != undefined) {
