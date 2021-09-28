@@ -312,6 +312,36 @@ client.on("ready", () => {
             }
         }, "users");
     }, 60 * 60 * 1000);
+
+    //Raffle
+    setInterval(() => {
+        var date = new Date();
+        var utcDate = new Date(fate.toUTCString());
+        utcDate.setHours(utcDate.getHours() - 8);
+        var currentDate = new Date(utcDate);
+        if ([1, 4].includes(currentDate.getDay()) && currentDate.getHours() === 4) {
+            utils.selectFromDB(connection, function(success, resp) {
+                if (success) {
+                    client.guilds.fetch("842146071626514462").then(guild => guild.channels.fetch("887485231521738762").then(channel => {
+                        var rand = Math.floor(Math.random() * resp.length);
+                        utils.selectFromDB(connection, function(success2, resp2) {
+                            if (success2) {
+                                utils.updateRow(connection, "users", "coins", (parseInt(resp2[0].coins) + resp.length), ["userID", resp[rand].userID], function() {
+                                    channel.send("<@" + resp[rand].userID + "> has won the raffle! 🎫\nAdded " + resp.length + " Good Boy coins to your tally " + goodBoyCoin);
+
+                                    utils.rawQuery(connection, "DELETE FROM raffle;", function() {
+                                        utils.rawQuery(connection, "UPDATE orders SET refundable=0 WHERE rewardID=7 AND refundable=1;", function() {});
+                                    });
+                                });
+                            }
+                        }, "users", "userID", resp[rand].userID);
+                    }));
+                } else {
+                    channel.send("Raffle is empty!");
+                }
+            }, "raffle");
+        }
+    }, 60 * 60 * 1000);
 });
 
 client.on("error", error => {
