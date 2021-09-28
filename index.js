@@ -477,8 +477,8 @@ client.on('interactionCreate', async interaction => {
             break;
         case "miners":
             var user;
-            if (interaction.options.get("username") != undefined) user = interaction.options.get("username").user.id;
-            else user = interaction.user.id;
+            if (interaction.options.get("username") != undefined) user = interaction.options.get("username").user;
+            else user = interaction.user;
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
                     var embed = new Discord.MessageEmbed()
@@ -490,9 +490,9 @@ client.on('interactionCreate', async interaction => {
                         .setFooter("Made by cunt#4811", user.avatarURL());
                     interaction.reply({ embeds: [embed] });
                 } else {
-                    interaction.reply("Couldn't find user <@" + user + "> in the tally!");
+                    interaction.reply("Couldn't find user <@" + user.id + "> in the tally!");
                 }
-            }, "users", "userID", user);
+            }, "users", "userID", user.id);
             break;
         case "buy":
             if (interaction.options.get("reward") != undefined) {
