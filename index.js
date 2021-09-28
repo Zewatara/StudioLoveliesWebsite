@@ -341,7 +341,7 @@ client.on("ready", () => {
                 }
             }, "raffle");
         }
-    }, /*60 * 60 * */ 1000);
+    }, /*60 * 60 * */ 10000);
 });
 
 client.on("error", error => {
