@@ -481,7 +481,7 @@ client.on('interactionCreate', async interaction => {
                         .setFooter("Made by cunt#4811", interaction.user.avatarURL());
                     interaction.reply({ embeds: [embed] });
                 } else {
-                    interaction.reply("Couldn't find user <@" + user + "> in the tally!");
+                    interaction.reply("Couldn't find user <@" + interaction.user.id + "> in the tally!");
                 }
             }, "users", "userID", interaction.user.id);
             break;
