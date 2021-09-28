@@ -316,7 +316,7 @@ client.on("ready", () => {
     //Raffle
     setInterval(() => {
         var date = new Date();
-        var utcDate = new Date(fate.toUTCString());
+        var utcDate = new Date(date.toUTCString());
         utcDate.setHours(utcDate.getHours() - 8);
         var currentDate = new Date(utcDate);
         if ([1, 4].includes(currentDate.getDay()) && currentDate.getHours() === 4) {
