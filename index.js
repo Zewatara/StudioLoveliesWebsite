@@ -135,6 +135,11 @@ const commands = [{
     },
 
     {
+        name: "miners",
+        description: "Show how many Good Boy coins you've mined"
+    },
+
+    {
         name: "buy",
         description: "Buy something from the shop with your Good Boy coins",
         options: [{
@@ -461,10 +466,24 @@ client.on('interactionCreate', async interaction => {
                 if (success) {
                     interaction.reply("<@" + user + "> has " + resp[0].coins + " Good Boy coins " + goodBoyCoin);
                 } else {
-                    console.log(resp);
                     interaction.reply("Couldn't find user <@" + user + "> in the tally!");
                 }
             }, "users", "userID", user);
+            break;
+        case "miners":
+            utils.selectFromDB(connection, function(success, resp) {
+                if (success) {
+                    var embed = new Discord.MessageEmbed()
+                        .setTitle("Good Boy coins mined " + goodBoyCoin)
+                        .setColor("#00ADEF")
+                        .addField("Current mined amount:", resp[0].minerAmount)
+                        .addField("Total GBC mined:", resp[0].totalMined)
+                        .setFooter("Made by cunt#4811", interaction.user.avatarURL());
+                    interaction.reply({ embeds: [embed] });
+                } else {
+                    interaction.reply("Couldn't find user <@" + user + "> in the tally!");
+                }
+            }, "users", "userID", interaction.user.id);
             break;
         case "buy":
             if (interaction.options.get("reward") != undefined) {
