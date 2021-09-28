@@ -302,7 +302,9 @@ client.on("ready", () => {
                             if (Math.floor(parseFloat(resp[i].minerAmount)) >= 1) {
                                 utils.updateRow(connection, "users", "minerAmount", (parseFloat(resp[i].minerAmount) - Math.floor(parseFloat(resp[i].minerAmount))), ["userID", resp[i].userID], function() {
                                     utils.updateRow(connection, "users", "coins", (parseInt(resp[i].coins) + Math.floor(parseFloat(resp[i].minerAmount))), ["userID", resp[i].userID], function() {
-                                        //Done
+                                        utils.updateRow(connection, "users", "totalMined", (parseInt(resp[i].coins) + Math.floor(parseFloat(resp[i].minerAmount))), ["userID", resp[i].userID], function() {
+                                            //Done
+                                        });
                                     });
                                 });
                             }
