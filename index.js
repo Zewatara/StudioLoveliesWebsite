@@ -476,8 +476,8 @@ client.on('interactionCreate', async interaction => {
                     var embed = new Discord.MessageEmbed()
                         .setTitle("Good Boy coins mined " + goodBoyCoin)
                         .setColor("#00ADEF")
-                        .addField("Current mined amount:", resp[0].minerAmount)
-                        .addField("Total GBC mined:", resp[0].totalMined)
+                        .addField("Current mined amount:", resp[0].minerAmount.toString())
+                        .addField("Total GBC mined:", resp[0].totalMined.toString())
                         .setFooter("Made by cunt#4811", interaction.user.avatarURL());
                     interaction.reply({ embeds: [embed] });
                 } else {
