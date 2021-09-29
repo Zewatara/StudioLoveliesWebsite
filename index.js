@@ -213,7 +213,7 @@ const rest = new REST({ version: '9' }).setToken(TOKEN);
     }
 })();
 
-var client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
+var client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.DIRECT_MESSAGES] });
 
 var cuntAvatar;
 client.users.fetch("375485987893149696").then(cunt => cuntAvatar = cunt.avatarURL());
