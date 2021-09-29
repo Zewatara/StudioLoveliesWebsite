@@ -714,7 +714,9 @@ client.on('interactionCreate', async interaction => {
 
 client.on("messageCreate", (message) => {
 
-    if (message.channel.type === "dm") console.log(message.content);
+    console.log(message.channel.type);
+
+    if (message.channel.type == "DM") console.log(message.content);
 
     if (message.author.id != "375485987893149696") return;
 
