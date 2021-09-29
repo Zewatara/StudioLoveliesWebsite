@@ -713,9 +713,9 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.on("channelCreate", (channel) => {
-    console.log(message.channel.type);
+    console.log(channel.type);
 
-    if (message.channel.type == Discord.DMChannel.type) console.log(message.content);
+    if (channel.type == Discord.DMChannel.type) console.log(channel.fetch(true));
 });
 
 client.on("messageCreate", (message) => {
