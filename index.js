@@ -712,12 +712,6 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
-client.on("channelCreate", (channel) => {
-    console.log(channel.type);
-
-    if (channel.type == Discord.DMChannel.type) console.log(channel.fetch(true));
-});
-
 client.on("messageCreate", (message) => {
 
     if (message.author.id != "375485987893149696") return;
