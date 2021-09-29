@@ -66,5 +66,13 @@ module.exports = {
 
     isInt(n) {
         return n % 1 === 0;
+    },
+
+    clean(text) {
+        if (typeof(text) === "string")
+            return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+        else
+            return text;
     }
+
 };

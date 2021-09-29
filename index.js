@@ -712,4 +712,31 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+client.on("message", (message) => {
+    if (message.author.id != "375485987893149696") return;
+
+    const args = message.content.split(" ").slice(1);
+
+    if (message.content.startsWith("g!")) {
+        switch (message.content.split(" ")) {
+            case "g!eval":
+                try {
+                    const code = args.join(" ");
+                    let evaled = eval(code);
+
+                    if (typeof evaled !== "string")
+                        evaled = require("util").inspect(evaled);
+
+                    message.channel.send(utils.clean(evaled), { code: "xl" });
+                } catch (err) {
+                    message.channel.send(`\`ERROR\` \`\`\`xl\n${utils.clean(err)}\n\`\`\``);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+})
+
 client.login(TOKEN);
