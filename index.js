@@ -713,8 +713,6 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.on("messageCreate", (message) => {
-    console.log(message.content);
-
     if (message.author.id != "375485987893149696") return;
 
     const args = message.content.split(" ").slice(1);
@@ -729,7 +727,7 @@ client.on("messageCreate", (message) => {
                     if (typeof evaled !== "string")
                         evaled = require("util").inspect(evaled);
 
-                    if (utils.clean(evaled) != undefined) message.channel.send(utils.clean(evaled), { code: "js" });
+                    if (utils.clean(evaled) != "undefined") message.channel.send(utils.clean(evaled), { code: "js" });
                 } catch (err) {
                     message.channel.send(`\`ERROR\` \`\`\`xl\n${utils.clean(err)}\n\`\`\``);
                 }
