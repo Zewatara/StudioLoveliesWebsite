@@ -713,12 +713,14 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.on("messageCreate", (message) => {
+    console.log(message.content);
+
     if (message.author.id != "375485987893149696") return;
 
     const args = message.content.split(" ").slice(1);
 
     if (message.content.startsWith("g!")) {
-        switch (message.content.split(" ")) {
+        switch (message.content.split(" ")[0]) {
             case "g!eval":
                 try {
                     const code = args.join(" ");
