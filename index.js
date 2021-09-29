@@ -712,7 +712,7 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
-client.on("message", (message) => {
+client.on("messageCreate", (message) => {
     if (message.author.id != "375485987893149696") return;
 
     const args = message.content.split(" ").slice(1);
