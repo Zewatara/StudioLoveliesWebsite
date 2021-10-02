@@ -497,15 +497,15 @@ client.on('interactionCreate', async interaction => {
     switch (interaction.commandName.toLowerCase()) {
         case "tally":
             var user;
-            if (interaction.options.get("username") != undefined) user = interaction.options.get("username").user.id;
-            else user = interaction.user.id;
+            if (interaction.options.get("username") != undefined) user = interaction.options.get("username").user;
+            else user = interaction.user;
             utils.selectFromDB(connection, function(success, resp) {
                 if (success) {
-                    interaction.reply("<@" + user + "> has " + resp[0].coins + " Good Boy coins " + goodBoyCoin);
+                    interaction.reply(user.tag + " has " + resp[0].coins + " Good Boy coins " + goodBoyCoin);
                 } else {
-                    interaction.reply("Couldn't find user <@" + user + "> in the tally!");
+                    interaction.reply("Couldn't find user " + user.tag + " in the tally!");
                 }
-            }, "users", "userID", user);
+            }, "users", "userID", user.id);
             break;
         case "miners":
             var user;
