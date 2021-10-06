@@ -38,8 +38,8 @@ module.exports = {
         if (Array.isArray(value)) {
             finalValue = "(";
             for (i in value) {
-                if (this.isInt(value[i])) finalValue += value[i];
-                else finalValue += "'" + value[i] + "'";
+                if (this.isInt(value[i])) finalValue += value[i] + ", ";
+                else finalValue += "'" + value[i] + "', ";
             }
             value = finalValue + ")";
         } else {
