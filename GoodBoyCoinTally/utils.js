@@ -37,10 +37,10 @@ module.exports = {
 
         if (Array.isArray(value)) {
             for (i in value) {
-                if (this.isInt(value[i])) value += value[i];
-                else value += "'" + value[i] + "'";
+                if (this.isInt(value[i])) finalValue += value[i];
+                else finalValue += "'" + value[i] + "'";
             }
-            value = "(" + value + ")";
+            value = "(" + finalValue + ")";
         } else {
             if (this.isInt(value[i])) {
                 value = "(" + value + ")";
