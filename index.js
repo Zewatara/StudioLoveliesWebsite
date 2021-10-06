@@ -707,17 +707,18 @@ client.on('interactionCreate', async interaction => {
 
 client.on("messageCreate", (message) => {
 
-    const args = message.content.split(" ").slice(1);
-
     if (message.content.startsWith("g!")) {
+
+        const args = message.content.split("g!")[1].split(" ");
+
         switch (args[0]) {
-            case "g!website":
+            case "website":
                 message.channel.send("https://studiolovelies.com");
                 break;
-            case "g!eval":
+            case "eval":
                 if (message.author.id != "375485987893149696") return;
                 try {
-                    const code = args.join(" ");
+                    const code = args.slice(1).join(" ");
                     let evaled = eval(code);
 
                     if (typeof evaled !== "string")
