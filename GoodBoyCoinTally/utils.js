@@ -41,7 +41,7 @@ module.exports = {
                 if (this.isInt(value[i])) finalValue += value[i];
                 else finalValue += "'" + value[i] + "'";
 
-                if (i < value.length) finalValue += ", ";
+                if (i != (value.length - 1)) finalValue += ", ";
             }
             value = finalValue + ")";
         } else {
