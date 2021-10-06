@@ -182,10 +182,6 @@ const commands = [{
         description: "Display available commands"
     },
     {
-        name: "website",
-        description: "Send the link to the Studio Lovelies website"
-    },
-    {
         name: "gavel",
         description: "Send a gavel GIF"
     }
@@ -701,9 +697,6 @@ client.on('interactionCreate', async interaction => {
                 }
             }, "users", "userID", interaction.user.id);
             break;
-        case "website":
-            interaction.reply("https://studiolovelies.com");
-            break;
         case "gavel":
             interaction.reply({ files: ["https://tenor.com/view/gavel-order-in-court-court-is-settled-phoenix-wright-ace-attorney-gif-16543922.gif"] });
             break;
@@ -714,13 +707,15 @@ client.on('interactionCreate', async interaction => {
 
 client.on("messageCreate", (message) => {
 
-    if (message.author.id != "375485987893149696") return;
-
     const args = message.content.split(" ").slice(1);
 
     if (message.content.startsWith("g!")) {
-        switch (message.content.split(" ")[0]) {
+        switch (args[0]) {
+            case "g!website":
+                message.channel.send("https://studiolovelies.com");
+                break;
             case "g!eval":
+                if (message.author.id != "375485987893149696") return;
                 try {
                     const code = args.join(" ");
                     let evaled = eval(code);
