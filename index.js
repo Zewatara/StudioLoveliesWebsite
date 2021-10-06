@@ -724,7 +724,7 @@ client.on("messageCreate", (message) => {
                     if (typeof evaled !== "string")
                         evaled = require("util").inspect(evaled);
 
-                    if (utils.clean(evaled) != "undefined") message.channel.send(utils.clean(evaled), { code: "js" });
+                    if (utils.clean(evaled) != "undefined" || utils.clean(evaled) instanceof Promise) message.channel.send(utils.clean(evaled), { code: "js" });
                 } catch (err) {
                     message.channel.send(`\`ERROR\` \`\`\`xl\n${utils.clean(err)}\n\`\`\``);
                 }
