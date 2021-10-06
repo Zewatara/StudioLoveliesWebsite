@@ -38,6 +38,7 @@ module.exports = {
         if (Array.isArray(value)) value = "('" + value.join("', '") + "')";
         else value = "('" + value + "')";
 
+        console.log("INSERT INTO " + table + row + " VALUES " + value + ";");
         connection.query("INSERT INTO " + table + row + " VALUES " + value + ";");
         callback();
     },
