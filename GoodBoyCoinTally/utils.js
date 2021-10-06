@@ -50,7 +50,6 @@ module.exports = {
             } else value = "('" + value + "')";
         }
 
-        console.log("INSERT INTO " + table + row + " VALUES " + value + ";");
         connection.query("INSERT INTO " + table + row + " VALUES " + value + ";");
         callback();
     },
