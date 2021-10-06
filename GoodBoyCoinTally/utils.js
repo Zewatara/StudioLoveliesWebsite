@@ -38,10 +38,10 @@ module.exports = {
         if (Array.isArray(value)) {
             value = "(";
             for (i in value)
-                if (isInt(value[i])) value += value[i];
+                if (this.isInt(value[i])) value += value[i];
                 else value += "('" + value[i] + "')";
         } else {
-            if (isInt(value[i])) {
+            if (this.isInt(value[i])) {
                 value = "(" + value + ")";
             } else value = "('" + value + "')";
         }
