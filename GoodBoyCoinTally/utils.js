@@ -36,10 +36,11 @@ module.exports = {
         }
 
         if (Array.isArray(value)) {
-            value = "(";
-            for (i in value)
+            for (i in value) {
                 if (this.isInt(value[i])) value += value[i];
-                else value += "('" + value[i] + "')";
+                else value += "'" + value[i] + "'";
+            }
+            value = "(" + value + ")";
         } else {
             if (this.isInt(value[i])) {
                 value = "(" + value + ")";
