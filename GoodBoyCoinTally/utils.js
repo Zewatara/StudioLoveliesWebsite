@@ -35,8 +35,16 @@ module.exports = {
             else row = " (" + row + ")";
         }
 
-        if (Array.isArray(value)) value = "('" + value.join("', '") + "')";
-        else value = "('" + value + "')";
+        if (Array.isArray(value)) {
+            value = "(";
+            for (i in value)
+                if (isInt(value[i])) value += value[i];
+                else value += "('" + value[i] + "')";
+        } else {
+            if (isInt(value[i])) {
+                value = "(" + value + ")";
+            } else value = "('" + value + "')";
+        }
 
         console.log("INSERT INTO " + table + row + " VALUES " + value + ";");
         connection.query("INSERT INTO " + table + row + " VALUES " + value + ";");
