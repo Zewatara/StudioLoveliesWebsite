@@ -468,7 +468,6 @@ client.on('interactionCreate', async interaction => {
                         }, "orders", "orderID", interaction.options.get("orderid").value);
                     } else {
                         utils.rawQuery(connection, "SELECT * FROM orders WHERE completed=false AND refundable=true;", function(success, resp) {
-                            console.log(success, resp);
                             if (success) {
                                 var embed = new Discord.MessageEmbed()
                                     .setTitle("Orders left to complete")

@@ -61,12 +61,11 @@ module.exports = {
     },
 
     rawQuery(connection, query, callback) {
-        console.log(query);
-        connection.query(query, function(err) {
+        connection.query(query, function(err, resp) {
             if (err) {
                 callback(false, err);
                 return;
-            } else callback(true);
+            } else callback(true, resp);
         });
     },
 
