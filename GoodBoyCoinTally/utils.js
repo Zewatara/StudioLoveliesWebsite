@@ -61,6 +61,7 @@ module.exports = {
     },
 
     rawQuery(connection, query, callback) {
+        console.log(query);
         connection.query(query, function(err) {
             if (err) {
                 callback(false, err);
