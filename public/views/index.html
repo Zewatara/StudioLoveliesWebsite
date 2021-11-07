@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body onload="onLoad();">
 
     <div class="header">
         <div class="logo" onclick="window.location.href='/'">
@@ -36,11 +36,10 @@
         <h2>How's it going?</h2>
         <h3>We're fine! Thanks for asking!</h3>
         <p>So, yeah... Just wanted to welcome you to our website, feel free to look around :) There might be some hidden stuff!<br />No, there isn't... But it couldn't hurt to look for them! Just in case...<br /><br />Anyways, I am Isaac, one of the lead
-            programmers in the wonderful Studio Lovelies team. I made this cause, hum... the game is finished. Speaking of,
-            "Game Grumps: Joint Justice" is the first of (probably) many projects to come from us, and we're very excited to show it to the world! We have a team composed of really talented artists, writers, composers, programmers and fantastic team leaders.
-            We've all worked really hard on this since September of 2019. Well, I think so, I wasn't there for half of the project, I joined in August of 2020. And now <b>boom</b> here we are with a game that we hope you and the Grumps will love!</b><br
-            />Well, looks like it's all the time I have! Don't forget to click on the "Contact" tab if you want to ask, complain, insult or just to stay in touch! I'll see you out there, I got to go and do se-<br />Stuff. Just, <b>stuff</b>.<br /><br
-            />- Isaac</p>
+            programmers in the wonderful Studio Lovelies team. I made this cause, hum... the game is finished. Speaking of, "Game Grumps: Joint Justice" is the first of (probably) many projects to come from us, and we're very excited to show it to the
+            world! We have a team composed of really talented artists, writers, composers, programmers and fantastic team leaders. We've all worked really hard on this since September of 2019. Well, I think so, I wasn't there for half of the project,
+            I joined in August of 2020. And now <b>boom</b> here we are with a game that we hope you and the Grumps will love!</b><br />Well, looks like it's all the time I have! Don't forget to click on the "Contact" tab if you want to ask, complain,
+            insult or just to stay in touch! I'll see you out there, I got to go and do se-<br />Stuff. Just, <b>stuff</b>.<br /><br />- Isaac</p>
     </div>
 
     <div class="spacer-50"></div>
@@ -49,7 +48,9 @@
         <h1 class="center">What we're up to</h1>
         <h2>Game Grumps: Joint Justice</h2>
         <h3>The game</h3>
-        <p>Production for the tutorial case is completed and we're extremely fortunate that the Game Grumps themselves have played the game! You can check out the first episode here <a style="text-decoration: underline; color: white;" href="https://www.youtube.com/watch?v=Skop4WFElhE" target="_blank">https://www.youtube.com/watch?v=Skop4WFElhE</a>. This is extremely exciting for everyone in Studio Lovelies, so thank you to the whole team, to the lovely Allie for helping us get on the show and - of course - the Game Grumps themselves for checking out our game!<br /><br />Our first case and development of future potential cases is now underway, you can join the Discord server to watch development or even join the team!</p>
+        <p>Production for the tutorial case is completed and we're extremely fortunate that the Game Grumps themselves have played the game! You can check out the first episode here <a style="text-decoration: underline; color: white;" href="https://www.youtube.com/watch?v=Skop4WFElhE"
+                target="_blank">https://www.youtube.com/watch?v=Skop4WFElhE</a>. This is extremely exciting for everyone in Studio Lovelies, so thank you to the whole team, to the lovely Allie for helping us get on the show and - of course - the Game Grumps
+            themselves for checking out our game!<br /><br />Our first case and development of future potential cases is now underway, you can join the Discord server to watch development or even join the team!</p>
         <h3>Platform change</h3>
         <p>We used the LÖVE (love2d) engine to make this game, and unfortunately, this engine runs Lua, which is not the most powerful language.<br />On a better note, big chad Jape Falcon started converting the game into the Unity engine, so get ready for
             some better graphics, run-time, load times and new game mechanics!</p>
@@ -71,7 +72,26 @@
         </ul>
         <div class="center copyright"><span>Copyright © Studio Lovelies 2021 - All rights reserved | Website by Isaac Laquerre</span></div>
     </div>
+    <div class="mobile-footer">
+        <ul style="list-style-type: none;">
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="https://redbubble.com/people/studio-lovelies/shop" target="_blank">Merch</a></li>
+            <li><a href="https://www.youtube.com/channel/UC4NFhIl0Q6wacaIpujy1p7Q" target="_blank">YouTube</a></li>
+            <li><a href="https://twitter.com/studiolovelies" target="_blank">Twitter</a></li>
+        </ul>
+        <div class="center copyright"><span>Copyright © Studio Lovelies 2021 - All rights reserved | Website by Isaac Laquerre</span></div>
+    </div>
 
 </body>
+
+<script>
+    onresize = function() {
+        checkScreenWidth();
+    }
+
+    function onLoad() {
+        checkScreenWidth();
+    }
+</script>
 
 </html>

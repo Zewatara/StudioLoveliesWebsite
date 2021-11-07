@@ -6,7 +6,7 @@ const { Routes } = require('discord-api-types/v9');
 const mysql = require("mysql");
 const http = require("http");
 const utils = require("./GoodBoyCoinTally/utils.js");
-if (process.env.CLEARDB_DATABASE_URL === undefined) {
+if (typeof process.env.CLEARDB_DATABASE_URL != "string") {
     const config = require("./GoodBoyCoinTally/config.json");
 }
 
@@ -52,19 +52,11 @@ if (process.env.CLEARDB_DATABASE_URL != undefined) {
         database: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[4].split("?")[0],
         flags: "-FOUND_ROWS"
     };
-} else {
-    dbOptions = {
-        host: config.dbUrl,
-        user: config.dbUser,
-        password: config.dbPass,
-        database: config.dbName,
-        flags: "-FOUND_ROWS"
-    };
 }
 
 var connection = mysql.createPool(dbOptions);
 
-const TOKEN = process.env.BOT_TOKEN || config.token;
+const TOKEN = process.env.BOT_TOKEN;
 const goodBoyCoin = "<:goodboycoin:625181771335729173>";
 const commands = [{
         name: "grant",
@@ -294,9 +286,9 @@ client.on("ready", () => {
             if (success) {
                 for (i in resp) {
                     if (parseInt(resp[i].miners) > 0) {
-                        utils.updateRow(connection, "users", "minerAmount", (parseFloat(resp[i].minerAmount) + 0.01 * parseInt(resp[i].miners)), ["userID", resp[i].userID], function() {
+                        utils.updateRow(connection, "users", "minerAmount", parseFloat(resp[i].minerAmount + (0.01 * parseInt(resp[i].miners))), ["userID", resp[i].userID], function() {
                             if (Math.floor(parseFloat(resp[i].minerAmount)) >= 1) {
-                                utils.updateRow(connection, "users", "minerAmount", (parseFloat(resp[i].minerAmount) - Math.floor(parseFloat(resp[i].minerAmount))), ["userID", resp[i].userID], function() {
+                                utils.updateRow(connection, "users", "minerAmount", parseFloat(resp[i].minerAmount - Math.floor(parseFloat(resp[i].minerAmount))), ["userID", resp[i].userID], function() {
                                     utils.updateRow(connection, "users", "coins", (parseInt(resp[i].coins) + Math.floor(parseFloat(resp[i].minerAmount))), ["userID", resp[i].userID], function() {
                                         utils.updateRow(connection, "users", "totalMined", (parseInt(resp[i].coins) + Math.floor(parseFloat(resp[i].minerAmount))), ["userID", resp[i].userID], function() {
                                             //Done
@@ -734,6 +726,6 @@ client.on("messageCreate", (message) => {
         }
     }
 
-})
+});
 
-client.login(TOKEN);
+//client.login(TOKEN);

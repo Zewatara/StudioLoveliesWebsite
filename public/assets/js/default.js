@@ -55,3 +55,13 @@ function clearFields() {
     subject.value = "";
     message.value = "";
 }
+
+function checkScreenWidth() {
+    if (window.outerWidth > 900) {
+        document.getElementsByClassName("footer")[0].style.display = "block";
+        document.getElementsByClassName("mobile-footer")[0].style.display = "none";
+    } else {
+        document.getElementsByClassName("footer")[0].style.display = "none";
+        document.getElementsByClassName("mobile-footer")[0].style.display = "block";
+    }
+}

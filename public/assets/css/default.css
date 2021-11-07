@@ -3,6 +3,24 @@
     src: url("../fonts/AvantGardeLT-Medium.otf");
 }
 
+@media only screen and (min-width: 900px) {
+    .footer {
+        display: block;
+    }
+    .mobile-footer {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .footer {
+        display: none;
+    }
+    .mobile-footer {
+        display: block;
+    }
+}
+
 body {
     font-family: AvantGardeLT-Medium;
     font-size: 15pt;
@@ -178,7 +196,17 @@ a {
     padding: 10px;
 }
 
-.footer a {
+.mobile-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(0, 173, 239);
+    padding: 10px;
+}
+
+.footer a,
+.mobile-footer a {
     color: white;
 }
 
@@ -186,7 +214,18 @@ a {
     margin: 20px 0 0;
 }
 
-.footer .copyright span {
+.mobile-footer ul {
+    padding-inline-start: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.mobile-footer li {
+    margin: 5px;
+}
+
+.footer .copyright span,
+.mobile-footer .copyright span {
     color: white;
     margin-bottom: 10px;
     font-size: 12pt;

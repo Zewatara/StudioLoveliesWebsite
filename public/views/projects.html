@@ -10,7 +10,7 @@
 
 </head>
 
-<body style="width: 100%; min-height: 100vh; position: relative;">
+<body style="width: 100%; min-height: 100vh; position: relative;" onload="onLoad();">
 
     <div class="header">
         <div class="logo" onclick="window.location.href='/'">
@@ -51,7 +51,26 @@
         </ul>
         <div class="center copyright"><span>Copyright © Studio Lovelies 2021 - All rights reserved | Website by Isaac Laquerre</span></div>
     </div>
+    <div class="mobile-footer">
+        <ul style="list-style-type: none;">
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="https://redbubble.com/people/studio-lovelies/shop" target="_blank">Merch</a></li>
+            <li><a href="https://www.youtube.com/channel/UC4NFhIl0Q6wacaIpujy1p7Q" target="_blank">YouTube</a></li>
+            <li><a href="https://twitter.com/studiolovelies" target="_blank">Twitter</a></li>
+        </ul>
+        <div class="center copyright"><span>Copyright © Studio Lovelies 2021 - All rights reserved | Website by Isaac Laquerre</span></div>
+    </div>
 
 </body>
+
+<script>
+    onresize = function() {
+        checkScreenWidth();
+    }
+
+    function onLoad() {
+        checkScreenWidth();
+    }
+</script>
 
 </html>
