@@ -57,6 +57,7 @@ if (process.env.CLEARDB_DATABASE_URL != undefined) {
 var connection = mysql.createPool(dbOptions);
 
 const TOKEN = process.env.BOT_TOKEN;
+console.log(TOKEN);
 const goodBoyCoin = "<:goodboycoin:625181771335729173>";
 const commands = [{
         name: "grant",
