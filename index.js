@@ -206,6 +206,10 @@ var client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discor
 var cuntAvatar;
 client.users.fetch("375485987893149696").then(cunt => cuntAvatar = cunt.avatarURL());
 
+app.get("*", (req, res) => {
+    if (req.url.includes("herokuapp")) return res.redirect("https://studiolovelies.com");
+});
+
 app.get("/", (req, res) => {
     return res.sendFile("index.html", { root: "public/views" });
 });
