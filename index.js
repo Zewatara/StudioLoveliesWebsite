@@ -33,13 +33,13 @@ transporter.verify(function(error, success) {
     if (error) {
         console.log(error);
     } else {
-        console.log("Server is ready to take our messages");
+        console.log("Mail server is ready to take messages");
     }
 });
 
 app.listen(
     PORT,
-    () => console.log("App live and listening on port " + PORT)
+    () => console.log("Website live and listening on port " + PORT)
 );
 
 dbOptions = {};
@@ -273,7 +273,7 @@ app.get("*", (req, res) => {
 });
 
 client.on("ready", () => {
-    console.info("Ready");
+    console.info("Bot ready");
 
     //Ping to keep awake
     setInterval(() => {
@@ -728,4 +728,4 @@ client.on("messageCreate", (message) => {
 
 });
 
-//client.login(TOKEN);
+client.login(TOKEN);
