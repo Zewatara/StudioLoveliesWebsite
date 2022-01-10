@@ -232,6 +232,11 @@ a {
     font-size: 12pt;
 }
 
+.footer .copyright a {
+    color: white;
+    text-decoration: underline;
+}
+
 .whoWeAre h2 {
     padding-top: 25px;
 }
