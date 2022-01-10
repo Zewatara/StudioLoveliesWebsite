@@ -232,7 +232,7 @@ a {
     font-size: 12pt;
 }
 
-.footer .copyright a {
+.footer .copyright span a {
     color: white;
     text-decoration: underline;
 }
