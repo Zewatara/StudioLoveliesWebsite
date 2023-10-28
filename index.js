@@ -28,10 +28,10 @@ transporter.verify(function(error, success) {
     }
 });
 
-app.listen(
-    PORT,
-    () => console.log("Website live and listening on port " + PORT)
-);
+// app.listen(
+//     PORT,
+//     () => console.log("Website live and listening on port " + PORT)
+// );
 
 app.get("/", (req, res) => {
     return res.sendFile("index.html", { root: "public/views" });
