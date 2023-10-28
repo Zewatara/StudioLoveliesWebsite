@@ -13,7 +13,6 @@
 </head>
 
 <body onload="onLoad();">
-
     <div class="header">
         <div class="logo" onclick="window.location.href='/'">
             <img id="studioLovelies-logo" width="100" alt="Transparent logo" src="assets/images/logo-transparent.png">
@@ -112,16 +111,6 @@
 
     <div class="spacer-100"></div>
 
-    <div class="container card center" style="width: 50%; height: 60vh; margin: auto;">
-        <ul id="goodBoyCoinTally" style="list-style-type: none; position: relative; padding: 0 1em;">
-            <div style="display: flex; justify-content: space-around;">
-                <img src="assets/images/goodBoyCoin.png" style="width: 50px; height: 50px">
-                <h1 class="center">Our current Good Boy coin tally!</h1>
-                <img src="assets/images/goodBoyCoin.png" style="width: 50px; height: 50px">
-            </div>
-        </ul>
-    </div>
-
     <div class="spacer-100"></div>
     <div class="spacer-100"></div>
     <div class="spacer-50"></div>
@@ -142,7 +131,7 @@
             <li><a href="https://www.youtube.com/channel/UC4NFhIl0Q6wacaIpujy1p7Q" target="_blank">YouTube</a></li>
             <li><a href="https://twitter.com/studiolovelies" target="_blank">Twitter</a></li>
         </ul>
-        <div class="center copyright"><span>Copyright © Studio Lovelies 2021 - All rights reserved | Website by <a href="https://isaaclaquerre.ca" target="_blank" style="text-decoration: underline;">Isaac Laquerre</a></span></div>
+        <div class="center copyright"><span>Copyright © Studio Lovelies <span id="copyright-year">2021</span> - All rights reserved | Website by <a href="https://isaaclaquerre.ca" target="_blank" style="text-decoration: underline;">Isaac Laquerre</a></span></div>
     </div>
 </body>
 
@@ -153,7 +142,7 @@
 
     function onLoad() {
         checkScreenWidth();
-        setUpTally();
+        document.getElementById("copyright-year").innerHTML = new Date().getFullYear();
     }
 </script>
 

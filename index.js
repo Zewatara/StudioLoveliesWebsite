@@ -1,10 +1,5 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
-const Discord = require("discord.js");
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const mysql = require("mysql");
-const http = require("http");
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
@@ -16,31 +11,27 @@ app.set('views', __dirname + '/public/views');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    auth: {
+        user: process.env.SMTP_USERNAME,
+        pass: process.env.SMTP_PASSWORD,
+    },
+});
+
+transporter.verify(function(error, success) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("Mail server is ready to take messages");
+    }
+});
+
 app.listen(
     PORT,
     () => console.log("Website live and listening on port " + PORT)
 );
-
-dbOptions = {};
-
-if (process.env.CLEARDB_DATABASE_URL != undefined) {
-    dbOptions = {
-        host: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[3],
-        user: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[2].split(":")[0],
-        password: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[2].split(":")[1],
-        database: process.env.CLEARDB_DATABASE_URL.split(/\/|@/g)[4].split("?")[0],
-        flags: "-FOUND_ROWS"
-    };
-}
-
-var connection = mysql.createPool(dbOptions);
-
-const TOKEN = process.env.BOT_TOKEN;
-const goodBoyCoin = "<:goodboycoin:625181771335729173>";
-
-const mutedCommands = [4, 7, 8];
-
-const rest = new REST({ version: '9' }).setToken(TOKEN);
 
 app.get("/", (req, res) => {
     return res.sendFile("index.html", { root: "public/views" });
@@ -67,20 +58,33 @@ app.post("/contact", (req, res) => {
     if (req.query.sendEmail == "" || req.query.sendEmail == true) {
 
         const mail = {
-            from: process.env.EMAIL,
-            to: process.env.EMAIL,
+            from: process.env.SMTP_FROM,
+            to: process.env.SMTP_TO,
             subject: req.body.subject,
             text: req.body.message + "\n\nSent from: " + req.body.email,
         };
 
-        console.error("contact form")
+        transporter.sendMail(mail, (err, data) => {
+            if (err) {
+                return res.send({
+                    status: "error",
+                    error: "An internal server error occured",
+                    message: err,
+                    data
+                });
+            } else {
+                return res.send({
+                    status: "ok",
+                    success: true
+                });
+            }
+        });
     }
 });
 
 app.get("*", (req, res) => {
     return res.status(404).sendFile("404.html", { root: "public/views" });
 });
-
 
 process.on("uncaughtException", error => {
     console.log(error);
